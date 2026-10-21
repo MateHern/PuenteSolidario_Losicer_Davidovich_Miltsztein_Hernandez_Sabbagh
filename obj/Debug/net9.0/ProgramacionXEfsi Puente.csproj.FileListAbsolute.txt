@@ -1,0 +1,96 @@
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\rpswa.dswa.cache.json
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\ProgramacionXEfsi Puente.GeneratedMSBuildEditorConfig.editorconfig
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\ProgramacionXEfsi Puente.AssemblyInfoInputs.cache
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\ProgramacionXEfsi Puente.AssemblyInfo.cs
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\ProgramacionXEfsi Puente.csproj.CoreCompileInputs.cache
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\ProgramacionXEfsi Puente.MvcApplicationPartsAssemblyInfo.cache
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\ProgramacionXEfsi Puente.RazorAssemblyInfo.cache
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\ProgramacionXEfsi Puente.RazorAssemblyInfo.cs
+Z:\2026.prog\ProgramacionXEfsi Puente\bin\Debug\net9.0\appsettings.Development.json
+Z:\2026.prog\ProgramacionXEfsi Puente\bin\Debug\net9.0\appsettings.json
+Z:\2026.prog\ProgramacionXEfsi Puente\bin\Debug\net9.0\ProgramacionXEfsi Puente.staticwebassets.runtime.json
+Z:\2026.prog\ProgramacionXEfsi Puente\bin\Debug\net9.0\ProgramacionXEfsi Puente.staticwebassets.endpoints.json
+Z:\2026.prog\ProgramacionXEfsi Puente\bin\Debug\net9.0\ProgramacionXEfsi Puente.exe
+Z:\2026.prog\ProgramacionXEfsi Puente\bin\Debug\net9.0\ProgramacionXEfsi Puente.deps.json
+Z:\2026.prog\ProgramacionXEfsi Puente\bin\Debug\net9.0\ProgramacionXEfsi Puente.runtimeconfig.json
+Z:\2026.prog\ProgramacionXEfsi Puente\bin\Debug\net9.0\ProgramacionXEfsi Puente.dll
+Z:\2026.prog\ProgramacionXEfsi Puente\bin\Debug\net9.0\ProgramacionXEfsi Puente.pdb
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\rjimswa.dswa.cache.json
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\scopedcss\bundle\ProgramacionXEfsi Puente.styles.css
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\scopedcss\projectbundle\ProgramacionXEfsi Puente.bundle.scp.css
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\3q19l3g2n3-b9sayid5wm.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\276pfky7bw-61n19gt1b8.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\5c8jmzfwsh-xtxxf3hu2r.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\k2iwrr9vsh-bqjiyaj88i.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\71gnops2pa-c2jlpeoesf.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\w6j68x9nwp-erw9l3u2r3.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\jilop6cf1p-aexeepp0ev.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\dqflnx39sb-d7shbmvgxk.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\rl1oqer73h-ausgxo2sd3.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\s5ozsz5442-k8d9w2qqmf.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\hx446mehts-cosvhxvwiu.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\ctucq1jkdm-ub07r2b239.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\c07vrsyw2d-fvhpjtyr6v.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\hlbqoocxe7-b7pk76d08c.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\cehpy1cghk-fsbi9cje9m.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\ejp7ssgf7l-rzd6atqjts.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\0p2hjo2547-ee0r1s7dh0.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\dxu8kgjh84-dxx9fxp4il.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\1p3tp30lec-jd9uben2k1.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\6czwdc1zra-khv3u5hwcm.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\2kt02qedds-r4e9w2rdcm.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\dd4q9lskm3-lcd1t2u6c8.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\vabfoqnegp-c2oey78nd0.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\4r60u094lb-tdbxkamptv.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\o6zorejlsj-j5mq2jizvt.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\5xmh1mx160-06098lyss8.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\77zqaeo90b-nvvlpmu67g.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\3ltavstbbe-s35ty4nyc5.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\t4r4fqd7kq-pj5nd1wqec.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\tvxuv6sbu1-46ein0sx1k.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\rrj8oi7lg6-v0zj4ognzu.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\0x1ym8wadx-37tfw0ft22.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\gmjh8znzwb-hrwsygsryq.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\j3fa3s713t-pk9g2wxc8p.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\5538iv9vzc-ft3s53vfgj.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\4dqg2invsk-6cfz1n2cew.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\xz15wvjw95-6pdc2jztkx.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\dyoabwmg3o-493y06b0oq.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\0aokq83taj-iovd86k7lj.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\l5on95e3zb-vr1egmr9el.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\vklbamoexx-kbrnm935zg.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\i03pt1dsog-jj8uyg4cgr.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\8fij9oo1ub-y7v9cxd14o.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\gvtocc3mo6-notf2xhcfb.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\a91w93hzlm-h1s4sie4z3.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\fcuu2pmzrc-63fj8s7r0e.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\070au6o7h4-0j3bgjxly4.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\mni4iqr5cb-47otxtyo56.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\9szgjom0xi-4v8eqarkd7.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\7cwagf74ja-356vix0kms.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\py0kld4rpf-83jwlth58m.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\sb7ytnsi35-mrlpezrjn3.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\q70ivkuu0k-lzl9nlhx6b.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\lz9cu1c6ox-ag7o75518u.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\4otmsm6hs6-x0q3zqp4vz.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\tn16pf1oj2-0i3buxo5is.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\16k4j4k7yu-o1o13a6vjx.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\h136zhs4ue-ttgo8qnofa.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\8r6t49q19w-2z0ns9nrw6.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\ix7ug66dif-muycvpuwrr.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\fls3fsta2v-87fc7y1x7t.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\qrpy2rmuwm-mlv21k5csn.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\mhwt1f7jil-gukaizxjmf.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\compressed\d400jpxe7l-gukaizxjmf.gz
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\staticwebassets.build.json
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\staticwebassets.build.json.cache
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\staticwebassets.development.json
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\staticwebassets.build.endpoints.json
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\ProgramacionXEfsi Puente.dll
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\refint\ProgramacionXEfsi Puente.dll
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\ProgramacionXEfsi Puente.pdb
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\ProgramacionXEfsi Puente.genruntimeconfig.cache
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\ref\ProgramacionXEfsi Puente.dll

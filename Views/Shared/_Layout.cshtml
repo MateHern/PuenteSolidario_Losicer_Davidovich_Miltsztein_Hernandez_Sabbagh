@@ -1,0 +1,85 @@
+﻿@{
+    var isLoggedIn = TempData["IsLoggedIn"] as bool? ?? false;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Puente Solidario</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        warm: {
+                            50: '#FCFBF9',
+                            200: '#D8C3A5',
+                            700: '#3E3631'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="min-h-screen bg-[#FCFBF9] text-[#3E3631] antialiased">
+    <header class="bg-white shadow-sm">
+        <nav class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
+            <div class="flex items-center gap-2">
+                <a href="/" class="text-xl font-bold tracking-tight text-[#3E3631]">Puente Solidario</a>
+            </div>
+
+            <div class="hidden items-center gap-8 md:flex">
+                <a href="/" class="text-sm font-medium text-[#3E3631] transition hover:text-[#7A695B]">Inicio</a>
+                <a href="/Catalogo" class="text-sm font-medium text-[#3E3631] transition hover:text-[#7A695B]">Catálogo</a>
+                <a href="/Perfil" class="text-sm font-medium text-[#3E3631] transition hover:text-[#7A695B]">Perfil</a>
+            </div>
+
+            <div class="flex items-center gap-3">
+                @if (!isLoggedIn)
+                {
+                    <a href="/Auth/Login" class="rounded-full bg-[#D8C3A5] px-5 py-2.5 text-sm font-semibold text-[#3E3631] shadow-sm transition hover:bg-[#cbb08e]">
+                        Ingresar / Crear cuenta
+                    </a>
+                }
+                else
+                {
+                    <div class="flex items-center gap-3">
+                        <a href="/Auth/Logout" class="rounded-full bg-[#E8E1DB] px-4 py-2 text-sm font-semibold text-[#3E3631] transition hover:bg-[#ddd3ca]">
+                            Cerrar sesión
+                        </a>
+
+                        <a href="/Perfil" class="flex h-10 w-10 items-center justify-center rounded-full bg-[#3E3631] text-sm font-bold text-white shadow-sm transition hover:bg-[#2f2a28]">
+                            U
+                        </a>
+                    </div>
+                }
+            </div>
+        </nav>
+    </header>
+
+    <main class="min-h-screen bg-[#FCFBF9]">
+        <div class="mx-auto max-w-7xl px-6 py-10 lg:px-8">
+            @RenderBody()
+        </div>
+    </main>
+
+    <footer class="bg-[#3E3631] text-[#F2EFEA]">
+        <div class="mx-auto flex max-w-7xl flex-col gap-4 px-6 py-8 text-sm md:flex-row md:items-center md:justify-between lg:px-8">
+            <p class="font-medium">Puente Solidario · Ayudar nos conecta</p>
+
+            <div class="flex flex-wrap items-center gap-5 text-[#E8E1DB]">
+                <a href="#" class="transition hover:text-white">Contacto</a>
+                <a href="#" class="transition hover:text-white">Instagram</a>
+                <a href="#" class="transition hover:text-white">Privacidad</a>
+                <span class="text-[#D9D1CA]">© 2026</span>
+            </div>
+        </div>
+    </footer>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

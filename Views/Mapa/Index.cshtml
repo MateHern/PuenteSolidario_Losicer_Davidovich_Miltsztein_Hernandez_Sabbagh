@@ -1,0 +1,46 @@
+@{
+    ViewData["Title"] = "Mapa";
+}
+
+<div class="space-y-8 py-10">
+    <h1 class="text-4xl font-black text-[#2F2A28] md:text-5xl">Encontrá la organización que estás buscando</h1>
+
+    <div class="grid grid-cols-1 gap-8 lg:grid-cols-[7fr_3fr]">
+        <div class="relative min-h-[500px] overflow-hidden rounded-[28px] bg-[#E7E5E3] shadow-inner">
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.7),rgba(255,255,255,0)_40%),linear-gradient(135deg,rgba(255,255,255,0.15),rgba(0,0,0,0.02))]"></div>
+
+            <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+                <div class="flex h-14 w-14 items-center justify-center rounded-full bg-[#2F2A28] text-white shadow-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="h-6 w-6">
+                        <path d="M12 2a7 7 0 0 1 7 7c0 5.25-7 13-7 13S5 14.25 5 9a7 7 0 0 1 7-7Zm0 9.5A2.5 2.5 0 1 0 12 6a2.5 2.5 0 0 0 0 5.5Z" />
+                    </svg>
+                </div>
+            </div>
+
+            <div class="absolute bottom-5 right-5 flex gap-2">
+                <button type="button" class="flex h-10 w-10 items-center justify-center rounded-full bg-white text-xl font-bold text-[#2F2A28] shadow-sm">+</button>
+                <button type="button" class="flex h-10 w-10 items-center justify-center rounded-full bg-white text-xl font-bold text-[#2F2A28] shadow-sm">−</button>
+            </div>
+        </div>
+
+        <aside class="rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-[#E8E1DB]">
+            <h2 class="text-2xl font-bold text-[#2F2A28]">Organizaciones cercanas</h2>
+
+            <div class="mt-6 space-y-4">
+                <div class="rounded-xl bg-[#F4F1EE] p-4">
+                    <p class="text-lg font-semibold text-[#2F2A28]">Alimentos para todos</p>
+                    <p class="mt-1 text-sm text-[#4A403B]">3 km</p>
+                </div>
+
+                <div class="rounded-xl bg-[#F4F1EE] p-4">
+                    <p class="text-lg font-semibold text-[#2F2A28]">Acompañar y aprender</p>
+                    <p class="mt-1 text-sm text-[#4A403B]">5 km</p>
+                </div>
+            </div>
+
+            <a href="/Donar" class="mt-8 inline-flex w-full items-center justify-center rounded-xl bg-[#2F2A28] px-4 py-3 text-base font-bold text-white transition hover:bg-[#1d1b1a]">
+                Volver a la donación
+            </a>
+        </aside>
+    </div>
+</div>

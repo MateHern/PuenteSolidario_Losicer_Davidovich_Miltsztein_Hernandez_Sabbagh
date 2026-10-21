@@ -1,0 +1,53 @@
+@{
+    ViewData["Title"] = "Iniciar sesión";
+}
+
+<div class="flex min-h-[calc(100vh-220px)] items-center justify-center bg-[#FCFBF9] px-4 py-12">
+    <div class="w-full max-w-md rounded-2xl bg-white p-8 shadow-sm ring-1 ring-[#F0EAE4]">
+        <div class="mb-8 text-center">
+            <h1 class="text-3xl font-black text-[#2F2A28]">¡Qué bueno verte!</h1>
+            <p class="mt-2 text-sm text-[#6F625D]">Inicia sesión para continuar</p>
+        </div>
+
+        <form asp-action="Login" method="post" class="space-y-5">
+            <div>
+                <label for="email" class="mb-2 block text-xs font-bold tracking-[0.22em] text-[#4A403B]">CORREO ELECTRÓNICO</label>
+                <input id="email" name="email" type="email" class="w-full rounded-xl border border-[#D9D1CA] bg-[#F9F7F5] px-4 py-3 text-sm text-[#2F2A28] outline-none transition focus:border-[#D98C48] focus:ring-2 focus:ring-[#F3D7BB]" placeholder="correo@ejemplo.com" />
+            </div>
+
+            <div>
+                <label for="password" class="mb-2 block text-xs font-bold tracking-[0.22em] text-[#4A403B]">CONTRASEÑA</label>
+                <div class="relative">
+                    <input id="password" name="password" type="password" class="w-full rounded-xl border border-[#D9D1CA] bg-[#F9F7F5] px-4 py-3 pr-12 text-sm text-[#2F2A28] outline-none transition focus:border-[#D98C48] focus:ring-2 focus:ring-[#F3D7BB]" placeholder="••••••••" />
+                    <button type="button" aria-label="Mostrar contraseña" class="absolute inset-y-0 right-3 flex items-center text-[#6F625D]">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="h-5 w-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.644C3.42 7.917 7.27 5.5 12 5.5s8.58 2.417 9.964 6.178a1.012 1.012 0 0 1 0 .644C20.58 16.083 16.73 18.5 12 18.5s-8.58-2.417-9.964-6.178Z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-between gap-3 text-sm">
+                <label class="flex items-center gap-2 text-[#4A403B]">
+                    <input type="checkbox" class="h-4 w-4 rounded border-[#D9D1CA] text-[#D98C48] focus:ring-[#D98C48]" />
+                    Recordarme
+                </label>
+                <a href="#" class="font-medium text-[#3E3631] underline-offset-2 hover:underline">¿Olvidaste tu clave?</a>
+            </div>
+
+            <button type="submit" class="w-full rounded-xl bg-[#D98C48] px-4 py-3 text-base font-bold text-white shadow-sm transition hover:bg-[#c77b38]">
+                Iniciar sesión
+            </button>
+        </form>
+
+        <div class="mt-6 grid gap-3 sm:grid-cols-2">
+            <a href="/Auth/RegistroPersonal" class="inline-flex items-center justify-center rounded-xl border border-[#D9D1CA] bg-white px-4 py-3 text-sm font-semibold text-[#2F2A28] transition hover:bg-[#F8F5F2]">
+                Crear una cuenta personal -&gt;
+            </a>
+            <a href="/Auth/RegistroOrg" class="inline-flex items-center justify-center rounded-xl border border-[#D9D1CA] bg-white px-4 py-3 text-sm font-semibold text-[#2F2A28] transition hover:bg-[#F8F5F2]">
+                Registrar una organización -&gt;
+            </a>
+        </div>
+    </div>
+</div>

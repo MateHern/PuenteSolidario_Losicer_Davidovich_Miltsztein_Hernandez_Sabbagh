@@ -1,0 +1,56 @@
+@{
+    ViewData["Title"] = "Registro de organización";
+}
+
+<div class="flex min-h-[calc(100vh-220px)] items-center justify-center bg-[#FCFBF9] px-4 py-12">
+    <div class="w-full max-w-2xl rounded-2xl bg-white p-8 shadow-sm ring-1 ring-[#F0EAE4]">
+        <h1 class="text-center text-3xl font-black text-[#2F2A28]">Registrá tu organización</h1>
+
+        <form method="post" class="mt-8 space-y-6">
+            <div class="grid gap-5 md:grid-cols-2">
+                <div>
+                    <label for="nombrePublico" class="mb-2 block text-xs font-bold tracking-[0.18em] text-[#4A403B]">NOMBRE PÚBLICO</label>
+                    <input id="nombrePublico" name="nombrePublico" type="text" class="w-full rounded-xl border border-[#D9D1CA] bg-[#F9F7F5] px-4 py-3 text-sm text-[#2F2A28] outline-none transition focus:border-[#2F9D9D] focus:ring-2 focus:ring-[#CFEAEA]" />
+                </div>
+
+                <div>
+                    <label for="cuit" class="mb-2 block text-xs font-bold tracking-[0.18em] text-[#4A403B]">CUIT/IDENTIFICACIÓN</label>
+                    <input id="cuit" name="cuit" type="text" class="w-full rounded-xl border border-[#D9D1CA] bg-[#F9F7F5] px-4 py-3 text-sm text-[#2F2A28] outline-none transition focus:border-[#2F9D9D] focus:ring-2 focus:ring-[#CFEAEA]" />
+                </div>
+
+                <div>
+                    <label for="correoInstitucional" class="mb-2 block text-xs font-bold tracking-[0.18em] text-[#4A403B]">CORREO INSTITUCIONAL</label>
+                    <input id="correoInstitucional" name="correoInstitucional" type="email" class="w-full rounded-xl border border-[#D9D1CA] bg-[#F9F7F5] px-4 py-3 text-sm text-[#2F2A28] outline-none transition focus:border-[#2F9D9D] focus:ring-2 focus:ring-[#CFEAEA]" />
+                </div>
+
+                <div>
+                    <label for="telefono" class="mb-2 block text-xs font-bold tracking-[0.18em] text-[#4A403B]">TELÉFONO</label>
+                    <input id="telefono" name="telefono" type="tel" class="w-full rounded-xl border border-[#D9D1CA] bg-[#F9F7F5] px-4 py-3 text-sm text-[#2F2A28] outline-none transition focus:border-[#2F9D9D] focus:ring-2 focus:ring-[#CFEAEA]" />
+                </div>
+
+                <div>
+                    <label for="password" class="mb-2 block text-xs font-bold tracking-[0.18em] text-[#4A403B]">CONTRASEÑA</label>
+                    <input id="password" name="password" type="password" class="w-full rounded-xl border border-[#D9D1CA] bg-[#F9F7F5] px-4 py-3 text-sm text-[#2F2A28] outline-none transition focus:border-[#2F9D9D] focus:ring-2 focus:ring-[#CFEAEA]" />
+                </div>
+
+                <div>
+                    <label for="confirmPassword" class="mb-2 block text-xs font-bold tracking-[0.18em] text-[#4A403B]">CONFIRMAR CONTRASEÑA</label>
+                    <input id="confirmPassword" name="confirmPassword" type="password" class="w-full rounded-xl border border-[#D9D1CA] bg-[#F9F7F5] px-4 py-3 text-sm text-[#2F2A28] outline-none transition focus:border-[#2F9D9D] focus:ring-2 focus:ring-[#CFEAEA]" />
+                </div>
+            </div>
+
+            <div>
+                <label for="descripcion" class="mb-2 block text-xs font-bold tracking-[0.18em] text-[#4A403B]">DESCRIPCIÓN DE LA ORGANIZACIÓN (MISIÓN, ACTIVIDADES...)</label>
+                <textarea id="descripcion" name="descripcion" rows="5" class="w-full rounded-xl border border-[#D9D1CA] bg-[#F9F7F5] px-4 py-3 text-sm text-[#2F2A28] outline-none transition focus:border-[#2F9D9D] focus:ring-2 focus:ring-[#CFEAEA]"></textarea>
+            </div>
+
+            <button type="submit" class="w-full rounded-xl bg-[#2F9D9D] px-4 py-3 text-base font-bold text-white shadow-sm transition hover:bg-[#248686]">
+                Solicitar cuenta de Organización
+            </button>
+        </form>
+
+        <div class="mt-6 text-center">
+            <a href="/Auth/Login" class="text-sm font-medium text-[#3E3631] underline-offset-2 hover:underline">¿Ya estás registrad@@? Iniciar sesión</a>
+        </div>
+    </div>
+</div>

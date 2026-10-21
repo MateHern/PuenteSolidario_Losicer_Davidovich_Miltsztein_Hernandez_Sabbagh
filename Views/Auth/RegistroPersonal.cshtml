@@ -1,0 +1,51 @@
+@{
+    ViewData["Title"] = "Registro personal";
+}
+
+<div class="flex min-h-[calc(100vh-220px)] items-center justify-center bg-[#FCFBF9] px-4 py-12">
+    <div class="w-full max-w-2xl rounded-2xl bg-white p-8 shadow-sm ring-1 ring-[#F0EAE4]">
+        <h1 class="text-center text-3xl font-black text-[#2F2A28]">Creá tu cuenta personal</h1>
+
+        <form method="post" class="mt-8 space-y-6">
+            <div class="grid gap-5 md:grid-cols-2">
+                <div>
+                    <label for="nombre" class="mb-2 block text-xs font-bold tracking-[0.18em] text-[#4A403B]">NOMBRE</label>
+                    <input id="nombre" name="nombre" type="text" class="w-full rounded-xl border border-[#D9D1CA] bg-[#F9F7F5] px-4 py-3 text-sm text-[#2F2A28] outline-none transition focus:border-[#2F9D9D] focus:ring-2 focus:ring-[#CFEAEA]" />
+                </div>
+
+                <div>
+                    <label for="apellido" class="mb-2 block text-xs font-bold tracking-[0.18em] text-[#4A403B]">APELLIDO</label>
+                    <input id="apellido" name="apellido" type="text" class="w-full rounded-xl border border-[#D9D1CA] bg-[#F9F7F5] px-4 py-3 text-sm text-[#2F2A28] outline-none transition focus:border-[#2F9D9D] focus:ring-2 focus:ring-[#CFEAEA]" />
+                </div>
+
+                <div>
+                    <label for="correo" class="mb-2 block text-xs font-bold tracking-[0.18em] text-[#4A403B]">CORREO ELECTRÓNICO</label>
+                    <input id="correo" name="correo" type="email" class="w-full rounded-xl border border-[#D9D1CA] bg-[#F9F7F5] px-4 py-3 text-sm text-[#2F2A28] outline-none transition focus:border-[#2F9D9D] focus:ring-2 focus:ring-[#CFEAEA]" />
+                </div>
+
+                <div>
+                    <label for="telefono" class="mb-2 block text-xs font-bold tracking-[0.18em] text-[#4A403B]">TELÉFONO</label>
+                    <input id="telefono" name="telefono" type="tel" class="w-full rounded-xl border border-[#D9D1CA] bg-[#F9F7F5] px-4 py-3 text-sm text-[#2F2A28] outline-none transition focus:border-[#2F9D9D] focus:ring-2 focus:ring-[#CFEAEA]" />
+                </div>
+
+                <div>
+                    <label for="password" class="mb-2 block text-xs font-bold tracking-[0.18em] text-[#4A403B]">CONTRASEÑA</label>
+                    <input id="password" name="password" type="password" class="w-full rounded-xl border border-[#D9D1CA] bg-[#F9F7F5] px-4 py-3 text-sm text-[#2F2A28] outline-none transition focus:border-[#2F9D9D] focus:ring-2 focus:ring-[#CFEAEA]" />
+                </div>
+
+                <div>
+                    <label for="confirmPassword" class="mb-2 block text-xs font-bold tracking-[0.18em] text-[#4A403B]">CONFIRMAR CONTRASEÑA</label>
+                    <input id="confirmPassword" name="confirmPassword" type="password" class="w-full rounded-xl border border-[#D9D1CA] bg-[#F9F7F5] px-4 py-3 text-sm text-[#2F2A28] outline-none transition focus:border-[#2F9D9D] focus:ring-2 focus:ring-[#CFEAEA]" />
+                </div>
+            </div>
+
+            <button type="submit" class="w-full rounded-xl bg-[#2F9D9D] px-4 py-3 text-base font-bold text-white shadow-sm transition hover:bg-[#248686]">
+                Crear cuenta personal
+            </button>
+        </form>
+
+        <div class="mt-6 text-center">
+            <a href="/Auth/Login" class="text-sm font-medium text-[#3E3631] underline-offset-2 hover:underline">¿Ya tenés cuenta? Iniciar sesión</a>
+        </div>
+    </div>
+</div>
