@@ -94,3 +94,4 @@ Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\refint\ProgramacionXEfsi 
 Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\ProgramacionXEfsi Puente.pdb
 Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\ProgramacionXEfsi Puente.genruntimeconfig.cache
 Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\ref\ProgramacionXEfsi Puente.dll
+Z:\2026.prog\ProgramacionXEfsi Puente\obj\Debug\net9.0\ProgramacionXEfsi Puente.sourcelink.json
