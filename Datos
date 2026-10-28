@@ -1,0 +1,66 @@
+-- 1. CATEGORÍAS (Tipos de ayuda o causas)
+INSERT INTO Categorias (Nombre, Descripcion) VALUES 
+('Alimentos', 'Alimentos no perecederos y agua'),
+('Ropa', 'Ropa y calzado de todos los talles'),
+('Educación', 'Útiles escolares y libros'),
+('Juguetes', 'Juguetes nuevos o en buen estado'),
+('Higiene', 'Artículos de limpieza e higiene personal'),
+('Salud', 'Insumos básicos de primeros auxilios y farmacia'),
+('Muebles', 'Mobiliario para hogares o comedores'),
+('Construcción', 'Materiales para refacción de viviendas'),
+('Voluntariado', 'Tiempo y mano de obra para actividades'),
+('Tecnología', 'Computadoras y celulares para estudio');
+
+-- 2. ORGANIZACIONES (ONGs y Comedores de barrio)
+INSERT INTO Organizaciones (Nombre, Direccion, Barrio, Telefono) VALUES 
+('Comedor Los Pibes', 'Av. Patricios 1000', 'La Boca', '11-4567-0001'),
+('Fundación Manos Abiertas', 'Calle Falsa 123', 'Almagro', '11-4567-0002'),
+('Refugio Abrigo', 'San Martín 456', 'Caballito', '11-4567-0003'),
+('Copa de Leche Esperanza', 'Belgrano 789', 'Flores', '11-4567-0004'),
+('Red Solidaria Sur', 'Rivadavia 2000', 'Balvanera', '11-4567-0005'),
+('Asociación Sonrisas', 'Corrientes 3400', 'Abasto', '11-4567-0006'),
+('Centro Comunitario Sol', 'Independencia 1500', 'San Telmo', '11-4567-0007'),
+('Hogar de Día Luz', 'Córdoba 2200', 'Recoleta', '11-4567-0008'),
+('Juntos a la Par', 'Triunvirato 4100', 'Villa Urquiza', '11-4567-0009'),
+('Unión Vecinal', 'Directorio 900', 'Parque Chacabuco', '11-4567-0010');
+
+-- 3. USUARIOS (Donantes y Voluntarios)
+INSERT INTO Usuarios (Nombre, Apellido, Email, Clave) VALUES 
+('Lucas', 'Gómez', 'lucas.g@email.com', 'Clave123'),
+('Sofía', 'Martínez', 'sofia.m@email.com', 'Clave123'),
+('Mateo', 'López', 'mateo.l@email.com', 'Clave123'),
+('Valentina', 'Pérez', 'valen.p@email.com', 'Clave123'),
+('Joaquín', 'Fernández', 'joaquin.f@email.com', 'Clave123'),
+('Camila', 'García', 'cami.g@email.com', 'Clave123'),
+('Agustín', 'Rodríguez', 'agus.r@email.com', 'Clave123'),
+('Martina', 'Silva', 'martu.s@email.com', 'Clave123'),
+('Nicolás', 'Romero', 'nico.r@email.com', 'Clave123'),
+('Julieta', 'Sosa', 'juli.s@email.com', 'Clave123');
+
+-- 4. NECESIDADES (Lo que las organizaciones están pidiendo ahora mismo)
+-- (OrganizacionId, CategoriaId, Titulo, Estado)
+INSERT INTO Necesidades (OrganizacionId, CategoriaId, Titulo, Estado) VALUES 
+(1, 1, 'Leche en polvo y fideos para merienda', 'Activa'),
+(2, 3, 'Cuadernos y mochilas para inicio escolar', 'Activa'),
+(3, 2, 'Frazadas y camperas de invierno', 'Activa'),
+(4, 9, 'Apoyo escolar para primaria los sábados', 'Activa'),
+(5, 10, 'PCs usadas para taller de informática', 'Activa'),
+(6, 4, 'Juguetes para el Día de la Niñez', 'Activa'),
+(7, 5, 'Lavandina y jabón para el centro', 'Activa'),
+(8, 8, 'Chapas para arreglar techo del galpón', 'Activa'),
+(9, 7, 'Sillas y mesas para el comedor', 'Activa'),
+(10, 1, 'Aceite y puré de tomate', 'Activa');
+
+-- 5. COLABORACIONES (Match entre Usuario y Necesidad)
+-- (UsuarioId, NecesidadId, Fecha, Comentario)
+INSERT INTO Colaboraciones (UsuarioId, NecesidadId, Fecha, Comentario) VALUES 
+(1, 1, '2026-10-15', 'Llevo 10 cajas de leche el viernes.'),
+(2, 4, '2026-10-16', 'Me anoto para dar clases de matemática.'),
+(3, 3, '2026-10-18', 'Tengo 5 frazadas lavadas y listas.'),
+(4, 5, '2026-10-20', 'Doné un monitor y un teclado.'),
+(5, 6, '2026-10-21', 'Dejo una bolsa con juegos de mesa.'),
+(6, 10, '2026-10-22', 'Llevo mercadería surtida esta tarde.'),
+(7, 2, '2026-10-23', 'Compré 10 cuadernos rayados.'),
+(8, 7, '2026-10-24', 'Llevo bidones de lavandina.'),
+(9, 9, '2026-10-25', 'Tengo 4 sillas de madera para donar.'),
+(10, 1, '2026-10-26', 'Aporto fideos y arroz.');
