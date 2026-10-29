@@ -1,110 +1,165 @@
 ﻿@{
     ViewData["Title"] = "Inicio";
-    var isLoggedIn = ViewBag.IsLoggedIn as bool? ?? false;
+    var rol = Context.Session.GetString("Rol");
+    var isLoggedIn = !string.IsNullOrWhiteSpace(rol);
+    var isOng = string.Equals(rol, "Ong", StringComparison.OrdinalIgnoreCase);
+    var isAdmin = string.Equals(rol, "Admin", StringComparison.OrdinalIgnoreCase) || string.Equals(rol, "AdminMadre", StringComparison.OrdinalIgnoreCase);
+    var nombre = ViewBag.UsuarioNombre as string ?? (isOng ? "ONG" : (isAdmin ? "Administrador" : "Usuario"));
 }
 
-<section class="overflow-hidden rounded-[28px] bg-[#F4EDE3]">
-    <div class="mx-auto grid max-w-7xl items-center gap-10 px-6 py-12 lg:grid-cols-2 lg:px-10 lg:py-16">
-        <div>
-            @if (isLoggedIn)
-            {
-                <p class="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#7A6050]">Acción social</p>
-                <h1 class="max-w-xl text-4xl font-black leading-tight text-[#2F2A28] md:text-5xl">
-                    TU SOLIDARIDAD DEJA HUELLA
-                </h1>
-            }
-            else
-            {
-                <p class="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#7A6050]">Haz la diferencia</p>
-                <h1 class="max-w-xl text-4xl font-black leading-tight text-[#2F2A28] md:text-5xl">
-                    TU AYUDA PUEDE CAMBIAR UNA HISTORIA
-                </h1>
-            }
-
-            <p class="mt-6 max-w-lg text-base leading-7 text-[#4A403B] md:text-lg">
-                Conectamos personas, organizaciones y causas para transformar necesidades reales en apoyo concreto, cercano y sostenido.
-            </p>
-
-            <div class="mt-8 flex flex-wrap items-center gap-4">
-                @if (isLoggedIn)
-                {
-                    <a href="/Catalogo" class="inline-flex items-center justify-center rounded-full bg-[#D98C48] px-7 py-3 text-base font-semibold text-white shadow-md transition hover:bg-[#c77b38]">
-                        DONAR
-                    </a>
-                    <a href="/Mapa" class="text-base font-semibold text-[#3E3631] underline decoration-[#D98C48] underline-offset-4 transition hover:text-[#7A6050]">
-                        Ver Mapa
-                    </a>
-                }
-                else
-                {
-                    <a href="/Auth/Login" class="inline-flex items-center justify-center rounded-full bg-[#D98C48] px-7 py-3 text-base font-semibold text-white shadow-md transition hover:bg-[#c77b38]">
-                        DONAR
-                    </a>
-                }
+@if (isLoggedIn && isOng)
+{
+    <div class="space-y-8 py-8">
+        <div class="rounded-[30px] border border-[#E9E3DD] bg-white p-6 shadow-sm">
+            <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div>
+                    <p class="text-xs font-bold uppercase tracking-[0.2em] text-[#7A6050]">Home de ONG</p>
+                    <h1 class="mt-2 text-4xl font-black text-[#2F2A28]">@nombre</h1>
+                </div>
+                <a href="/Cuenta/Logout" class="rounded-full bg-[#3E3631] px-5 py-3 text-sm font-semibold text-white hover:bg-[#2e2927]">
+                    Cerrar sesión
+                </a>
             </div>
         </div>
 
-        <div>
-            @if (isLoggedIn)
-            {
-                <div class="rounded-[24px] border border-[#E9E2DA] bg-white p-8 shadow-[0_18px_45px_rgba(62,54,49,0.08)]">
-                    <p class="text-sm font-semibold uppercase tracking-[0.2em] text-[#8A7466]">Impacto</p>
-                    <h2 class="mt-4 text-3xl font-black text-[#2F2A28]">TU IMPACTO: 3 aportes realizados</h2>
-                    <div class="mt-6 h-44 rounded-2xl bg-[#F6F1EB] p-6">
-                        <div class="flex h-full items-end gap-3">
-                            <div class="w-1/4 rounded-t-2xl bg-[#D98C48]" style="height: 35%;"></div>
-                            <div class="w-1/4 rounded-t-2xl bg-[#C9B39A]" style="height: 55%;"></div>
-                            <div class="w-1/4 rounded-t-2xl bg-[#D7C7B2]" style="height: 75%;"></div>
-                            <div class="w-1/4 rounded-t-2xl bg-[#A87C5A]" style="height: 90%;"></div>
-                        </div>
+        <div class="rounded-[30px] border border-[#E9E3DD] bg-[#F8F5F2] p-6 shadow-sm">
+            <h2 class="text-3xl font-black text-[#2F2A28]">¿Qué tipo de ayuda necesitás?</h2>
+            <p class="mt-3 text-lg text-[#544C47]">Subí tu voluntariado o tu pedido de donación para que la gente lo vea.</p>
+
+            <form asp-action="CrearPublicacion" asp-controller="Ong" method="post" class="mt-8 space-y-6">
+                @Html.AntiForgeryToken()
+
+                <div class="grid gap-6 md:grid-cols-3">
+                    <div>
+                        <label class="mb-2 block text-sm font-semibold text-[#3E3631]">Nombre del pedido</label>
+                        <input type="text" name="nombreDelPedido" class="w-full rounded-xl border border-[#D9D1CA] bg-white px-4 py-3 text-sm text-[#2F2A28] outline-none transition focus:border-[#2F9D9D] focus:ring-2 focus:ring-[#CFEAEA]" placeholder="ej: Abrigo en invierno" />
+                    </div>
+
+                    <div>
+                        <label class="mb-2 block text-sm font-semibold text-[#3E3631]">Tipo de propuesta</label>
+                        <select name="tipoDePropuesta" class="w-full rounded-xl border border-[#D9D1CA] bg-white px-4 py-3 text-sm text-[#2F2A28] outline-none transition focus:border-[#2F9D9D] focus:ring-2 focus:ring-[#CFEAEA]">
+                            <option value="Donación">Donación</option>
+                            <option value="Voluntariado">Voluntariado</option>
+                            <option value="PlacaHonder">PlacaHonder</option>
+                            <option value="Otro">Otro</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="mb-2 block text-sm font-semibold text-[#3E3631]">Descripción</label>
+                        <input type="text" name="descripcion" class="w-full rounded-xl border border-[#D9D1CA] bg-white px-4 py-3 text-sm text-[#2F2A28] outline-none transition focus:border-[#2F9D9D] focus:ring-2 focus:ring-[#CFEAEA]" placeholder="Describí para qué se va a usar" />
                     </div>
                 </div>
-            }
-            else
-            {
-                <div class="h-[360px] w-full rounded-[28px] bg-[#E6E1DD] shadow-inner"></div>
-            }
+
+                <div class="grid gap-6 md:grid-cols-2">
+                    <div>
+                        <label class="mb-2 block text-sm font-semibold text-[#3E3631]">Ubicación</label>
+                        <input type="text" name="ubicacion" class="w-full rounded-xl border border-[#D9D1CA] bg-white px-4 py-3 text-sm text-[#2F2A28] outline-none transition focus:border-[#2F9D9D] focus:ring-2 focus:ring-[#CFEAEA]" placeholder="ej: Yatay 240, CABA" />
+                    </div>
+
+                    <div>
+                        <label class="mb-2 block text-sm font-semibold text-[#3E3631]">Cosas que se necesitan</label>
+                        <input type="text" name="cosasQueNecesitan" class="w-full rounded-xl border border-[#D9D1CA] bg-white px-4 py-3 text-sm text-[#2F2A28] outline-none transition focus:border-[#2F9D9D] focus:ring-2 focus:ring-[#CFEAEA]" placeholder="ej: abrigos, camperas, comida" />
+                    </div>
+                </div>
+
+                <div class="rounded-[24px] border-[3px] border-[#E6B95E] bg-[#F3EAD9] p-8 text-center">
+                    <div class="mb-4 flex justify-center">
+                        <div class="flex h-16 w-16 items-center justify-center rounded-full bg-[#5CC7C4] text-3xl font-bold text-white">☁</div>
+                    </div>
+                    <h3 class="text-3xl font-black text-[#2F2A28]">Subí imágenes de tu propuesta</h3>
+                    <p class="mt-3 text-lg text-[#544C47]">JPG o PNG - Podés agregar más de una imagen</p>
+                    <button type="button" class="mt-8 inline-flex h-16 w-16 items-center justify-center rounded-full bg-[#5CC7C4] text-5xl font-light text-white shadow-sm">+</button>
+                </div>
+
+                <button type="submit" class="w-full rounded-xl bg-[#53C3C1] px-4 py-4 text-xl font-bold text-white shadow-sm transition hover:bg-[#46b3b0]">
+                    Crear publicación
+                </button>
+            </form>
         </div>
     </div>
-</section>
+}
+else if (isLoggedIn && isAdmin)
+{
+    <section class="space-y-8 py-8">
+        <div class="rounded-[30px] border border-[#E9E3DD] bg-white p-6 shadow-sm">
+            <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div>
+                    <p class="text-xs font-bold uppercase tracking-[0.2em] text-[#7A6050]">Panel de administración</p>
+                    <h1 class="mt-2 text-4xl font-black text-[#2F2A28]">@nombre</h1>
+                </div>
+                <a href="/Cuenta/Logout" class="rounded-full bg-[#3E3631] px-5 py-3 text-sm font-semibold text-white hover:bg-[#2e2927]">
+                    Cerrar sesión
+                </a>
+            </div>
+        </div>
 
-<section class="mt-16 px-1">
-    <div class="mb-8 text-center">
-        <h2 class="text-3xl font-black text-[#2F2A28] md:text-4xl">Pequeñas acciones, grandes cambios</h2>
-    </div>
-
-    <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
-        <article class="rounded-[24px] border border-[#F0EAE4] bg-[#F5F3F1] p-5 shadow-sm">
-            <div class="mb-5 h-32 rounded-2xl bg-[#E6E1DD]"></div>
-            <h3 class="text-2xl font-bold text-[#2F2A28]">Donaciones</h3>
-            <p class="mt-3 text-base leading-7 text-[#4A403B]">
-                Aporta recursos esenciales para apoyar a familias, centros y proyectos locales con impacto inmediato.
-            </p>
-            <a href="/Catalogo" class="mt-5 inline-flex items-center text-base font-semibold text-[#3E3631] hover:text-[#7A6050]">
-                Conocer más -&gt;
+        <div class="grid gap-6 md:grid-cols-2">
+            <a href="/Admin/AprobarOngs" class="rounded-[24px] border border-[#E9E3DD] bg-[#F8F5F2] p-6 shadow-sm transition hover:bg-[#F2EDE8]">
+                <p class="text-sm font-semibold uppercase tracking-[0.2em] text-[#7A6050]">ONGs</p>
+                <h2 class="mt-3 text-3xl font-black text-[#2F2A28]">Aprobar solicitudes</h2>
+                <p class="mt-2 text-[#4A403B]">Revisá y validá las organizaciones pendientes.</p>
             </a>
-        </article>
 
-        <article class="rounded-[24px] border border-[#F0EAE4] bg-[#F5F3F1] p-5 shadow-sm">
-            <div class="mb-5 h-32 rounded-2xl bg-[#E6E1DD]"></div>
-            <h3 class="text-2xl font-bold text-[#2F2A28]">Voluntariados</h3>
-            <p class="mt-3 text-base leading-7 text-[#4A403B]">
-                Suma tu tiempo y capacidades para acompañar, organizar y fortalecer comunidades que reciben apoyo.
-            </p>
-            <a href="/Catalogo" class="mt-5 inline-flex items-center text-base font-semibold text-[#3E3631] hover:text-[#7A6050]">
-                Conocer más -&gt;
-            </a>
-        </article>
+            @if (string.Equals(rol, "AdminMadre", StringComparison.OrdinalIgnoreCase))
+            {
+                <a href="/Admin/CrearAdmin" class="rounded-[24px] border border-[#E9E3DD] bg-[#F8F5F2] p-6 shadow-sm transition hover:bg-[#F2EDE8]">
+                    <p class="text-sm font-semibold uppercase tracking-[0.2em] text-[#7A6050]">Super admin</p>
+                    <h2 class="mt-3 text-3xl font-black text-[#2F2A28]">Crear administrador</h2>
+                    <p class="mt-2 text-[#4A403B]">Generá nuevas cuentas administrativas.</p>
+                </a>
+            }
+        </div>
+    </section>
+}
+else
+{
+    <section class="overflow-hidden rounded-[28px] bg-[#F4EDE3]">
+        <div class="mx-auto grid max-w-7xl items-center gap-10 px-6 py-12 lg:grid-cols-2 lg:px-10 lg:py-16">
+            <div>
+                @if (isLoggedIn)
+                {
+                    <p class="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#7A6050]">Bienvenido/a</p>
+                    <h1 class="max-w-xl text-4xl font-black leading-tight text-[#2F2A28] md:text-5xl">@nombre</h1>
+                    <p class="mt-4 max-w-lg text-base leading-7 text-[#4A403B] md:text-lg">Tu espacio de acción solidaria está listo para seguir apoyando causas reales.</p>
+                }
+                else
+                {
+                    <p class="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#7A6050]">Haz la diferencia</p>
+                    <h1 class="max-w-xl text-4xl font-black leading-tight text-[#2F2A28] md:text-5xl">TU AYUDA PUEDE CAMBIAR UNA HISTORIA</h1>
+                }
 
-        <article class="rounded-[24px] border border-[#F0EAE4] bg-[#F5F3F1] p-5 shadow-sm">
-            <div class="mb-5 h-32 rounded-2xl bg-[#E6E1DD]"></div>
-            <h3 class="text-2xl font-bold text-[#2F2A28]">Organizaciones</h3>
-            <p class="mt-3 text-base leading-7 text-[#4A403B]">
-                Descubre instituciones que trabajan en causas concretas y encuentra maneras de apoyar colaborativamente.
-            </p>
-            <a href="/Catalogo" class="mt-5 inline-flex items-center text-base font-semibold text-[#3E3631] hover:text-[#7A6050]">
-                Conocer más -&gt;
-            </a>
-        </article>
-    </div>
-</section>
+                <p class="mt-6 max-w-lg text-base leading-7 text-[#4A403B] md:text-lg">Conectamos personas, organizaciones y causas para transformar necesidades reales en apoyo concreto, cercano y sostenido.</p>
+
+                <div class="mt-8 flex flex-wrap items-center gap-4">
+                    @if (isLoggedIn)
+                    {
+                        <a href="/Catalogo" class="inline-flex items-center justify-center rounded-full bg-[#D98C48] px-7 py-3 text-base font-semibold text-white shadow-md transition hover:bg-[#c77b38]">
+                            Ver catálogo
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="/Cuenta/Login" class="inline-flex items-center justify-center rounded-full bg-[#D98C48] px-7 py-3 text-base font-semibold text-white shadow-md transition hover:bg-[#c77b38]">
+                            DONAR
+                        </a>
+                    }
+                </div>
+            </div>
+
+            <div>
+                @if (isLoggedIn)
+                {
+                    <div class="rounded-[24px] border border-[#E9E2DA] bg-white p-8 shadow-[0_18px_45px_rgba(62,54,49,0.08)]">
+                        <p class="text-sm font-semibold uppercase tracking-[0.2em] text-[#8A7466]">Tu perfil</p>
+                        <h2 class="mt-4 text-3xl font-black text-[#2F2A28]">@nombre</h2>
+                    </div>
+                }
+                else
+                {
+                    <div class="h-[360px] w-full rounded-[28px] bg-[#E6E1DD] shadow-inner"></div>
+                }
+            </div>
+        </div>
+    </section>
+}

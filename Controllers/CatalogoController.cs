@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using ProgramacionXEfsi_Puente.Models;
 
 namespace ProgramacionXEfsi_Puente.Controllers;
 
@@ -6,6 +7,7 @@ public class CatalogoController : Controller
 {
     public IActionResult Index()
     {
-        return View();
+        var organizaciones = BD.ObtenerOrganizaciones();
+        return View(organizaciones);
     }
 }

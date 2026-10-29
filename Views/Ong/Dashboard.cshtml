@@ -1,0 +1,113 @@
+@model List<ProgramacionXEfsi_Puente.Models.Publicacion>
+@{
+    ViewData["Title"] = "Panel ONG";
+    var ongNombre = Context.Session.GetString("OngNombre") ?? "ONG";
+}
+
+<div class="space-y-8 py-8">
+    <div class="rounded-[26px] border border-[#E9E3DD] bg-white p-6 shadow-sm">
+        <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <div>
+                <p class="text-xs font-bold uppercase tracking-[0.2em] text-[#7A6050]">Panel de ONG</p>
+                <h1 class="mt-2 text-4xl font-black text-[#2F2A28]">@ongNombre</h1>
+            </div>
+            <a href="/Cuenta/Logout" class="rounded-full bg-[#3E3631] px-5 py-3 text-sm font-semibold text-white hover:bg-[#2e2927]">
+                Cerrar sesión
+            </a>
+        </div>
+    </div>
+
+    @if (TempData["OkPublicacion"] != null)
+    {
+        <div class="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+            @TempData["OkPublicacion"]
+        </div>
+    }
+
+    @if (TempData["ErrorPublicacion"] != null)
+    {
+        <div class="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+            @TempData["ErrorPublicacion"]
+        </div>
+    }
+
+    <div class="rounded-[30px] border border-[#E9E3DD] bg-[#F8F5F2] p-6 shadow-sm">
+        <h2 class="text-3xl font-black text-[#2F2A28]">¿Qué tipo de ayuda necesitás?</h2>
+        <p class="mt-3 text-lg text-[#544C47]">Subí tu voluntariado o tu pedido de donación para que la gente lo vea.</p>
+
+        <form asp-action="CrearPublicacion" asp-controller="Ong" method="post" class="mt-8 space-y-6">
+            @Html.AntiForgeryToken()
+
+            <div class="grid gap-6 md:grid-cols-3">
+                <div>
+                    <label class="mb-2 block text-sm font-semibold text-[#3E3631]">Nombre del pedido</label>
+                    <input type="text" name="nombreDelPedido" class="w-full rounded-xl border border-[#D9D1CA] bg-white px-4 py-3 text-sm text-[#2F2A28] outline-none transition focus:border-[#2F9D9D] focus:ring-2 focus:ring-[#CFEAEA]" placeholder="ej: Abrigo en invierno" />
+                </div>
+
+                <div>
+                    <label class="mb-2 block text-sm font-semibold text-[#3E3631]">Tipo de propuesta</label>
+                    <select name="tipoDePropuesta" class="w-full rounded-xl border border-[#D9D1CA] bg-white px-4 py-3 text-sm text-[#2F2A28] outline-none transition focus:border-[#2F9D9D] focus:ring-2 focus:ring-[#CFEAEA]">
+                        <option value="PlacaHonder">PlacaHonder</option>
+                        <option value="Donación">Donación</option>
+                        <option value="Voluntariado">Voluntariado</option>
+                        <option value="Otro">Otro</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="mb-2 block text-sm font-semibold text-[#3E3631]">Descripción</label>
+                    <input type="text" name="descripcion" class="w-full rounded-xl border border-[#D9D1CA] bg-white px-4 py-3 text-sm text-[#2F2A28] outline-none transition focus:border-[#2F9D9D] focus:ring-2 focus:ring-[#CFEAEA]" placeholder="Describí para qué se va a usar" />
+                </div>
+            </div>
+
+            <div class="grid gap-6 md:grid-cols-2">
+                <div>
+                    <label class="mb-2 block text-sm font-semibold text-[#3E3631]">Ubicación</label>
+                    <input type="text" name="ubicacion" class="w-full rounded-xl border border-[#D9D1CA] bg-white px-4 py-3 text-sm text-[#2F2A28] outline-none transition focus:border-[#2F9D9D] focus:ring-2 focus:ring-[#CFEAEA]" placeholder="ej: Yatay 240, CABA" />
+                </div>
+
+                <div>
+                    <label class="mb-2 block text-sm font-semibold text-[#3E3631]">Cosas que se necesitan</label>
+                    <input type="text" name="cosasQueNecesitan" class="w-full rounded-xl border border-[#D9D1CA] bg-white px-4 py-3 text-sm text-[#2F2A28] outline-none transition focus:border-[#2F9D9D] focus:ring-2 focus:ring-[#CFEAEA]" placeholder="ej: abrigos, camperas, comida" />
+                </div>
+            </div>
+
+            <div class="rounded-[24px] border-[3px] border-[#E6B95E] bg-[#F3EAD9] p-8 text-center">
+                <div class="mb-4 flex justify-center">
+                    <div class="flex h-16 w-16 items-center justify-center rounded-full bg-[#5CC7C4] text-3xl font-bold text-white">☁</div>
+                </div>
+                <h3 class="text-3xl font-black text-[#2F2A28]">Subí imágenes de tu propuesta</h3>
+                <p class="mt-3 text-lg text-[#544C47]">JPG o PNG - Podés agregar más de una imagen</p>
+                <button type="button" class="mt-8 inline-flex h-16 w-16 items-center justify-center rounded-full bg-[#5CC7C4] text-5xl font-light text-white shadow-sm">+</button>
+            </div>
+
+            <button type="submit" class="w-full rounded-xl bg-[#53C3C1] px-4 py-4 text-xl font-bold text-white shadow-sm transition hover:bg-[#46b3b0]">
+                Crear publicación
+            </button>
+        </form>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="space-y-4">
+            <h2 class="text-2xl font-black text-[#2F2A28]">Mis publicaciones</h2>
+            @foreach (var item in Model)
+            {
+                <div class="rounded-2xl border border-[#E9E3DD] bg-white p-5 shadow-sm">
+                    <div class="flex items-center justify-between gap-4">
+                        <div>
+                            <p class="text-xs font-bold uppercase tracking-[0.15em] text-[#7A6050]">@item.TipoPropuesta</p>
+                            <h3 class="mt-2 text-2xl font-bold text-[#2F2A28]">@item.Titulo</h3>
+                        </div>
+                        <span class="rounded-full bg-[#F3EAD9] px-3 py-1 text-xs font-semibold text-[#7A6050]">
+                            @item.FechaAlta.ToString("dd/MM/yyyy")
+                        </span>
+                    </div>
+                    <p class="mt-4 text-base text-[#4A403B]">@item.Descripcion</p>
+                    <p class="mt-2 text-sm text-[#4A403B]"><strong>Ubicación:</strong> @item.Ubicacion</p>
+                    <p class="mt-1 text-sm text-[#4A403B]"><strong>Necesidades:</strong> @item.Necesidades</p>
+                </div>
+            }
+        </div>
+    }
+</div>

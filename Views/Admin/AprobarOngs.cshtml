@@ -1,0 +1,53 @@
+@model List<ProgramacionXEfsi_Puente.Models.Organizacion>
+@{
+    ViewData["Title"] = "Aprobar ONGs";
+}
+
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold text-dark">Administración de ONGs</h2>
+            <p class="text-muted mb-0">ONGs pendientes de aprobación</p>
+        </div>
+        <a href="/Admin/CrearAdmin" class="btn btn-dark">Crear Admin</a>
+    </div>
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-success">No hay ONGs pendientes de aprobación.</div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-bordered align-middle bg-white shadow-sm rounded">
+                <thead class="table-light">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Teléfono</th>
+                        <th>Dirección</th>
+                        <th class="text-center">Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var ong in Model)
+                    {
+                        <tr>
+                            <td>@ong.Nombre</td>
+                            <td>@ong.Email</td>
+                            <td>@ong.Telefono</td>
+                            <td>@ong.Direccion</td>
+                            <td class="text-center">
+                                <form asp-action="AprobarOngs" asp-controller="Admin" method="post">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@ong.Id" />
+                                    <button type="submit" class="btn btn-success btn-sm">Aprobar</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
