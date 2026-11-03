@@ -1,6 +1,7 @@
 @model List<ProgramacionXEfsi_Puente.Models.Organizacion>
 @{
     ViewData["Title"] = "Catálogo";
+    var isLoggedIn = !string.IsNullOrWhiteSpace(Context.Session.GetString("Rol"));
 }
 
 <div class="space-y-8 py-10">
@@ -68,9 +69,18 @@
                         <span class="font-semibold text-[#2F2A28]">Teléfono:</span> @organizacion.Telefono
                     </p>
 
-                    <a href="/Donar" class="mt-5 inline-flex items-center text-base font-semibold text-[#3E3631] transition hover:text-[#7A6050]">
-                        Conocer más -&gt;
-                    </a>
+                    @if (isLoggedIn)
+                    {
+                        <a href="/Donar" class="mt-5 inline-flex items-center text-base font-semibold text-[#3E3631] transition hover:text-[#7A6050]">
+                            Conocer más -&gt;
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="/Cuenta/Login" class="mt-5 inline-flex items-center text-base font-semibold text-[#3E3631] transition hover:text-[#7A6050]">
+                            Conocer más -&gt;
+                        </a>
+                    }
                 </article>
             }
         </div>

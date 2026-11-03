@@ -21,7 +21,7 @@ namespace ProgramacionXEfsi_Puente.Models
                     o.UbicacionLocalidad AS Barrio,
                     CAST(o.Telefono AS varchar(50)) AS Telefono
                 FROM Organizaciones o
-                WHERE o.EsAprobado = 1
+                WHERE o.Valida = 1
                 ORDER BY o.Nombre").ToList();
         }
 
@@ -30,7 +30,7 @@ namespace ProgramacionXEfsi_Puente.Models
             using var connection = new SqlConnection(connectionString);
 
             var row = connection.QueryFirstOrDefault<dynamic>(
-                "SELECT TOP 1 Id, Nombre, Apellido, Mail AS Email, Contraseña AS Clave FROM Usuarios WHERE Id = @Id",
+                "SELECT TOP 1 Id, NombreUsuario, Nombre, Apellido, Mail AS Email, Contraseña AS Clave, DonacionRealizada, PersonasBeneficiadas, Rol FROM Usuarios WHERE Id = @Id",
                 new { Id = id });
 
             if (row == null)
@@ -43,8 +43,12 @@ namespace ProgramacionXEfsi_Puente.Models
                 Id = (int)row.Id,
                 Nombre = row.Nombre ?? string.Empty,
                 Apellido = row.Apellido ?? string.Empty,
+                NombreUsuario = row.NombreUsuario ?? string.Empty,
                 Email = row.Email ?? string.Empty,
-                Clave = row.Clave ?? string.Empty
+                Clave = row.Clave ?? string.Empty,
+                DonacionRealizada = row.DonacionRealizada is int donacion ? donacion : 0,
+                PersonasBeneficiadas = row.PersonasBeneficiadas?.ToString() ?? "0",
+                Rol = row.Rol ?? "Usuario"
             };
         }
 
@@ -53,7 +57,7 @@ namespace ProgramacionXEfsi_Puente.Models
             using var connection = new SqlConnection(connectionString);
 
             var row = connection.QueryFirstOrDefault<dynamic>(
-                "SELECT TOP 1 Id, Nombre, Mail, Contraseña, Telefono, UbicacionCalle, UbicacionNumero, UbicacionLocalidad FROM Organizaciones WHERE Id = @Id",
+                "SELECT TOP 1 Id, Nombre, Mail, Contraseña, Telefono, UbicacionCalle, UbicacionNumero, UbicacionLocalidad, Valida FROM Organizaciones WHERE Id = @Id",
                 new { Id = id });
 
             if (row == null)
@@ -67,7 +71,8 @@ namespace ProgramacionXEfsi_Puente.Models
                 Nombre = row.Nombre ?? string.Empty,
                 Direccion = $"{row.UbicacionCalle ?? string.Empty} {row.UbicacionNumero ?? string.Empty}".Trim(),
                 Barrio = row.UbicacionLocalidad ?? string.Empty,
-                Telefono = row.Telefono?.ToString() ?? string.Empty
+                Telefono = row.Telefono?.ToString() ?? string.Empty,
+                EsAprobado = row.Valida == true || row.Valida == 1
             };
         }
 
@@ -76,7 +81,7 @@ namespace ProgramacionXEfsi_Puente.Models
             using var connection = new SqlConnection(connectionString);
 
             var row = connection.QueryFirstOrDefault<dynamic>(
-                "SELECT TOP 1 Id, Nombre, Apellido, Mail AS Email, Contraseña AS Clave FROM Usuarios WHERE Mail = @email AND Contraseña = @clave",
+                "SELECT TOP 1 Id, NombreUsuario, Nombre, Apellido, Mail AS Email, Contraseña AS Clave, DonacionRealizada, PersonasBeneficiadas, Rol FROM Usuarios WHERE Mail = @email AND Contraseña = @clave",
                 new { email, clave });
 
             if (row == null)
@@ -89,8 +94,12 @@ namespace ProgramacionXEfsi_Puente.Models
                 Id = (int)row.Id,
                 Nombre = row.Nombre ?? string.Empty,
                 Apellido = row.Apellido ?? string.Empty,
+                NombreUsuario = row.NombreUsuario ?? string.Empty,
                 Email = row.Email ?? string.Empty,
-                Clave = row.Clave ?? string.Empty
+                Clave = row.Clave ?? string.Empty,
+                DonacionRealizada = row.DonacionRealizada is int donacion ? donacion : 0,
+                PersonasBeneficiadas = row.PersonasBeneficiadas?.ToString() ?? "0",
+                Rol = row.Rol ?? "Usuario"
             };
         }
 
@@ -99,7 +108,7 @@ namespace ProgramacionXEfsi_Puente.Models
             using var connection = new SqlConnection(connectionString);
 
             var row = connection.QueryFirstOrDefault<dynamic>(
-                "SELECT TOP 1 Id, Nombre, Mail, Contraseña, Telefono, UbicacionCalle, UbicacionNumero, UbicacionLocalidad FROM Organizaciones WHERE Mail = @email AND Contraseña = @clave",
+                "SELECT TOP 1 Id, Nombre, Mail, Contraseña, Telefono, UbicacionCalle, UbicacionNumero, UbicacionLocalidad, Valida FROM Organizaciones WHERE Mail = @email AND Contraseña = @clave",
                 new { email, clave });
 
             if (row == null)
@@ -113,7 +122,8 @@ namespace ProgramacionXEfsi_Puente.Models
                 Nombre = row.Nombre ?? string.Empty,
                 Direccion = $"{row.UbicacionCalle ?? string.Empty} {row.UbicacionNumero ?? string.Empty}".Trim(),
                 Barrio = row.UbicacionLocalidad ?? string.Empty,
-                Telefono = row.Telefono?.ToString() ?? string.Empty
+                Telefono = row.Telefono?.ToString() ?? string.Empty,
+                EsAprobado = row.Valida == true || row.Valida == 1
             };
         }
 
@@ -152,7 +162,10 @@ namespace ProgramacionXEfsi_Puente.Models
                     UbicacionNumero,
                     UbicacionLocalidad,
                     UbicacionCalle,
-                    IdProvincia)
+                    IdProvincia,
+                    Rol,
+                    DonacionRealizada,
+                    PersonasBeneficiadas)
                 VALUES (
                     @NombreUsuario,
                     @Nombre,
@@ -165,7 +178,10 @@ namespace ProgramacionXEfsi_Puente.Models
                     @UbicacionNumero,
                     @UbicacionLocalidad,
                     @UbicacionCalle,
-                    @IdProvincia)",
+                    @IdProvincia,
+                    @Rol,
+                    @DonacionRealizada,
+                    @PersonasBeneficiadas)",
                 new
                 {
                     NombreUsuario = email.Split('@')[0],
@@ -179,7 +195,10 @@ namespace ProgramacionXEfsi_Puente.Models
                     UbicacionNumero = 0,
                     UbicacionLocalidad = "Sin especificar",
                     UbicacionCalle = "Sin especificar",
-                    IdProvincia = 1
+                    IdProvincia = 1,
+                    Rol = "Usuario",
+                    DonacionRealizada = 0,
+                    PersonasBeneficiadas = "0"
                 });
         }
 
@@ -306,9 +325,9 @@ namespace ProgramacionXEfsi_Puente.Models
 
             return connection.Query<Organizacion>(@"
                 SELECT Id, Nombre, Mail AS Email, Contraseña AS Clave, Telefono,
-                       UbicacionCalle AS Direccion, UbicacionLocalidad AS Barrio, EsAprobado
+                       UbicacionCalle AS Direccion, UbicacionLocalidad AS Barrio, Valida AS EsAprobado
                 FROM Organizaciones
-                WHERE EsAprobado = 0
+                WHERE Valida = 0
                 ORDER BY Nombre").ToList();
         }
 
@@ -316,7 +335,7 @@ namespace ProgramacionXEfsi_Puente.Models
         {
             using var connection = new SqlConnection(connectionString);
             connection.Execute(
-                "UPDATE Organizaciones SET EsAprobado = 1 WHERE Id = @Id",
+                "UPDATE Organizaciones SET Valida = 1 WHERE Id = @Id",
                 new { Id = id });
         }
 
@@ -339,7 +358,8 @@ namespace ProgramacionXEfsi_Puente.Models
                     UbicacionCalle,
                     IdProvincia,
                     Rol,
-                    EsAprobado)
+                    DonacionRealizada,
+                    PersonasBeneficiadas)
                 VALUES (
                     @NombreUsuario,
                     @Nombre,
@@ -354,7 +374,8 @@ namespace ProgramacionXEfsi_Puente.Models
                     @UbicacionCalle,
                     @IdProvincia,
                     @Rol,
-                    @EsAprobado)",
+                    @DonacionRealizada,
+                    @PersonasBeneficiadas)",
                 new
                 {
                     NombreUsuario = email.Split('@')[0],
@@ -370,7 +391,8 @@ namespace ProgramacionXEfsi_Puente.Models
                     UbicacionCalle = "Interna",
                     IdProvincia = 1,
                     Rol = "Admin",
-                    EsAprobado = true
+                    DonacionRealizada = 0,
+                    PersonasBeneficiadas = "0"
                 });
         }
     }

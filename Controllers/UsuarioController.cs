@@ -8,12 +8,19 @@ namespace ProgramacionXEfsi_Puente.Controllers
         [RequireRole("Usuario")]
         public IActionResult Perfil()
         {
-            var usuario = new Usuario
+            var usuarioId = HttpContext.Session.GetInt32("UsuarioId");
+
+            if (!usuarioId.HasValue)
             {
-                Nombre = "Martina",
-                Apellido = "López",
-                Email = "martina.lopez@puentesolidario.org"
-            };
+                return RedirectToAction("Login", "Cuenta");
+            }
+
+            var usuario = BD.ObtenerUsuarioPorId(usuarioId.Value);
+
+            if (usuario == null)
+            {
+                return RedirectToAction("Login", "Cuenta");
+            }
 
             return View(usuario);
         }

@@ -74,7 +74,7 @@ namespace ProgramacionXEfsi_Puente.Controllers
             {
                 using var connection = new SqlConnection(ConnectionString);
                 var ong = await connection.QueryFirstOrDefaultAsync<OngLoginRow>(
-                    "SELECT TOP 1 Id, Nombre, Contraseña AS Clave, EsAprobado FROM Organizaciones WHERE Mail = @Email",
+                    "SELECT TOP 1 Id, Nombre, Contraseña AS Clave, Valida AS EsAprobado FROM Organizaciones WHERE Mail = @Email",
                     new { Email = email });
 
                 if (ong != null)
