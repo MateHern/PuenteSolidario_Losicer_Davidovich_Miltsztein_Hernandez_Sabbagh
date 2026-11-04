@@ -218,8 +218,7 @@ namespace ProgramacionXEfsi_Puente.Models
                     UbicacionNumero,
                     UbicacionLocalidad,
                     UbicacionCalle,
-                    IdProvincia,
-                    EsAprobado)
+                    IdProvincia)
                 VALUES (
                     @Nombre,
                     @Valida,
@@ -231,12 +230,11 @@ namespace ProgramacionXEfsi_Puente.Models
                     @UbicacionNumero,
                     @UbicacionLocalidad,
                     @UbicacionCalle,
-                    @IdProvincia,
-                    @EsAprobado)",
+                    @IdProvincia)",
                 new
                 {
                     Nombre = nombre,
-                    Valida = true,
+                    Valida = false,
                     Telefono = int.TryParse(telefono, out var tel) ? tel : 0,
                     RedSocial = descripcion,
                     Mail = email,
@@ -245,8 +243,7 @@ namespace ProgramacionXEfsi_Puente.Models
                     UbicacionNumero = 0,
                     UbicacionLocalidad = "Sin especificar",
                     UbicacionCalle = "Sin especificar",
-                    IdProvincia = 1,
-                    EsAprobado = false
+                    IdProvincia = 1
                 });
         }
 

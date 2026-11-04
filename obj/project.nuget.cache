@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "cIl1pADzMYs=",
+  "dgSpecHash": "pjZFN6WkQJA=",
   "success": true,
-  "projectFilePath": "C:\\Users\\50030354\\Desktop\\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\\ProgramacionXEfsi Puente.csproj",
+  "projectFilePath": "C:\\Users\\50030354\\Desktop\\CLON\\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\\ProgramacionXEfsi Puente.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\50030354\\.nuget\\packages\\dapper\\2.1.35\\dapper.2.1.35.nupkg.sha512",
     "C:\\Users\\50030354\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",

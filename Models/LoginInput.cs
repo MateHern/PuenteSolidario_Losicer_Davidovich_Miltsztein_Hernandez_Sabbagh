@@ -5,7 +5,7 @@ namespace ProgramacionXEfsi_Puente.Models
     public class LoginInput
     {
         [Required(ErrorMessage = "Debes seleccionar el tipo de cuenta")]
-        [RegularExpression("^(Usuario|Ong)$", ErrorMessage = "Debes seleccionar Usuario u ONG")]
+        [RegularExpression("^(Usuario|Ong|Admin)$", ErrorMessage = "Debes seleccionar Usuario, Admin u ONG")]
         public string TipoCuenta { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "El email es obligatorio")]

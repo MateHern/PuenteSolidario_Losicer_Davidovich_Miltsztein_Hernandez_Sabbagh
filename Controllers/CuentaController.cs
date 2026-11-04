@@ -10,6 +10,30 @@ namespace ProgramacionXEfsi_Puente.Controllers
     {
         private const string ConnectionString = @"Server=(local);Database=Puente Solidario;Trusted_Connection=True;TrustServerCertificate=True;";
 
+        private static string NormalizarRol(string? rol)
+        {
+            return (rol ?? string.Empty).Trim();
+        }
+
+        private static bool EsRolUsuarioValido(string? rol)
+        {
+            var normalized = NormalizarRol(rol);
+            return string.Equals(normalized, "Usuario", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(normalized, "Admin", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(normalized, "AdminMadre", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(normalized, "Administrador", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(normalized, "SuperAdmin", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static bool EsRolAdministrador(string? rol)
+        {
+            var normalized = NormalizarRol(rol);
+            return string.Equals(normalized, "Admin", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(normalized, "AdminMadre", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(normalized, "Administrador", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(normalized, "SuperAdmin", StringComparison.OrdinalIgnoreCase);
+        }
+
         private class UsuarioLoginRow
         {
             public int Id { get; set; }
@@ -45,7 +69,7 @@ namespace ProgramacionXEfsi_Puente.Controllers
 
             var email = model.Email.Trim();
 
-            if (model.TipoCuenta == "Usuario")
+            if (model.TipoCuenta == "Usuario" || model.TipoCuenta == "Admin")
             {
                 using var connection = new SqlConnection(ConnectionString);
                 var usuario = await connection.QueryFirstOrDefaultAsync<UsuarioLoginRow>(
@@ -57,16 +81,21 @@ namespace ProgramacionXEfsi_Puente.Controllers
                     string storedPassword = usuario.Clave ?? string.Empty;
                     if (!string.IsNullOrWhiteSpace(storedPassword) && string.Equals(model.Password, storedPassword, StringComparison.Ordinal))
                     {
-                        if (!(string.Equals(usuario.Rol, "Usuario", StringComparison.OrdinalIgnoreCase) ||
-                              string.Equals(usuario.Rol, "Admin", StringComparison.OrdinalIgnoreCase) ||
-                              string.Equals(usuario.Rol, "AdminMadre", StringComparison.OrdinalIgnoreCase)))
+                        var rol = NormalizarRol(usuario.Rol);
+                        if (!EsRolUsuarioValido(rol))
                         {
                             ModelState.AddModelError(string.Empty, "Ese usuario no tiene un rol válido para iniciar sesión.");
                             return View(model);
                         }
 
+                        if (model.TipoCuenta == "Admin" && !EsRolAdministrador(rol))
+                        {
+                            ModelState.AddModelError(string.Empty, "Este usuario no tiene permisos de administrador.");
+                            return View(model);
+                        }
+
                         HttpContext.Session.SetInt32("UsuarioId", usuario.Id);
-                        HttpContext.Session.SetString("Rol", usuario.Rol ?? "Usuario");
+                        HttpContext.Session.SetString("Rol", rol);
                         HttpContext.Session.SetString("UsuarioNombre", usuario.Nombre ?? "Usuario");
                         return RedirectToAction("Index", "Home");
                     }

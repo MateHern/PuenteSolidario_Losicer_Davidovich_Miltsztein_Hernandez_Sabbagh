@@ -21,11 +21,17 @@
                     Tipo de cuenta
                 </label>
 
-                <div class="grid gap-3 sm:grid-cols-2">
+                <div class="grid gap-3 sm:grid-cols-3">
                     <div>
                         <input asp-for="TipoCuenta" class="btn-check" type="radio" value="Usuario" id="tipoUsuario" checked />
                         <label class="btn btn-outline-primary w-100 rounded-xl border border-[#D9D1CA] bg-white px-4 py-3 text-sm fw-semibold text-[#2F2A28] shadow-sm transition hover:bg-[#F8F5F2]" for="tipoUsuario">
                             Usuario
+                        </label>
+                    </div>
+                    <div>
+                        <input asp-for="TipoCuenta" class="btn-check" type="radio" value="Admin" id="tipoAdmin" />
+                        <label class="btn btn-outline-primary w-100 rounded-xl border border-[#D9D1CA] bg-white px-4 py-3 text-sm fw-semibold text-[#2F2A28] shadow-sm transition hover:bg-[#F8F5F2]" for="tipoAdmin">
+                            Admin
                         </label>
                     </div>
                     <div>
