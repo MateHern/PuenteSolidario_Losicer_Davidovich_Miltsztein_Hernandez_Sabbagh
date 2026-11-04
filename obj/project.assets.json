@@ -511,11 +511,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\50030354\\Downloads\\Puenter definitivo hack\\ProgramacionXEfsi Puente DEFINITIVO\\ProgramacionXEfsi Puente.csproj",
+      "projectUniqueName": "C:\\Users\\50030354\\Desktop\\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\\ProgramacionXEfsi Puente.csproj",
       "projectName": "ProgramacionXEfsi Puente",
-      "projectPath": "C:\\Users\\50030354\\Downloads\\Puenter definitivo hack\\ProgramacionXEfsi Puente DEFINITIVO\\ProgramacionXEfsi Puente.csproj",
+      "projectPath": "C:\\Users\\50030354\\Desktop\\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\\ProgramacionXEfsi Puente.csproj",
       "packagesPath": "C:\\Users\\50030354\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\50030354\\Downloads\\Puenter definitivo hack\\ProgramacionXEfsi Puente DEFINITIVO\\obj\\",
+      "outputPath": "C:\\Users\\50030354\\Desktop\\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

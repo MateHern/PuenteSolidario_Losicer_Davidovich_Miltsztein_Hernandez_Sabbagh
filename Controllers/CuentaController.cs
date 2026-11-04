@@ -57,16 +57,18 @@ namespace ProgramacionXEfsi_Puente.Controllers
                     string storedPassword = usuario.Clave ?? string.Empty;
                     if (!string.IsNullOrWhiteSpace(storedPassword) && string.Equals(model.Password, storedPassword, StringComparison.Ordinal))
                     {
-                        if (!string.IsNullOrWhiteSpace(usuario.Rol) &&
-                            (string.Equals(usuario.Rol, "Admin", StringComparison.OrdinalIgnoreCase) ||
-                             string.Equals(usuario.Rol, "AdminMadre", StringComparison.OrdinalIgnoreCase) ||
-                             string.Equals(usuario.Rol, "Usuario", StringComparison.OrdinalIgnoreCase)))
+                        if (!(string.Equals(usuario.Rol, "Usuario", StringComparison.OrdinalIgnoreCase) ||
+                              string.Equals(usuario.Rol, "Admin", StringComparison.OrdinalIgnoreCase) ||
+                              string.Equals(usuario.Rol, "AdminMadre", StringComparison.OrdinalIgnoreCase)))
                         {
-                            HttpContext.Session.SetInt32("UsuarioId", usuario.Id);
-                            HttpContext.Session.SetString("Rol", usuario.Rol ?? "Usuario");
-                            HttpContext.Session.SetString("UsuarioNombre", usuario.Nombre ?? "Usuario");
-                            return RedirectToAction("Index", "Home");
+                            ModelState.AddModelError(string.Empty, "Ese usuario no tiene un rol válido para iniciar sesión.");
+                            return View(model);
                         }
+
+                        HttpContext.Session.SetInt32("UsuarioId", usuario.Id);
+                        HttpContext.Session.SetString("Rol", usuario.Rol ?? "Usuario");
+                        HttpContext.Session.SetString("UsuarioNombre", usuario.Nombre ?? "Usuario");
+                        return RedirectToAction("Index", "Home");
                     }
                 }
             }
