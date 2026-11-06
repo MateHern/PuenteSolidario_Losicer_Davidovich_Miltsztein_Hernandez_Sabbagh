@@ -20,10 +20,12 @@ public class HomeController : Controller
 
         ViewBag.IsLoggedIn = isLoggedIn;
         ViewBag.IsOng = string.Equals(rol, "Ong", StringComparison.OrdinalIgnoreCase);
+        ViewBag.IsAdmin = string.Equals(rol, "Admin", StringComparison.OrdinalIgnoreCase);
 
         if (isLoggedIn)
         {
-            if (string.Equals(rol, "Usuario", StringComparison.OrdinalIgnoreCase))
+            if (string.Equals(rol, "Usuario", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(rol, "Admin", StringComparison.OrdinalIgnoreCase))
             {
                 var usuarioId = HttpContext.Session.GetInt32("UsuarioId");
                 if (usuarioId.HasValue)

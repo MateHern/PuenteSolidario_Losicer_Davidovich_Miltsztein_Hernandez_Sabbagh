@@ -3,88 +3,63 @@
     ViewData["Title"] = "Iniciar sesión";
 }
 
-<div class="flex min-h-[calc(100vh-220px)] items-center justify-center bg-[#FCFBF9] px-4 py-12">
-    <div class="w-full max-w-lg rounded-3xl bg-white p-8 shadow-sm ring-1 ring-[#F0EAE4] sm:p-10">
-        <div class="mb-8 text-center">
-            <span class="inline-flex items-center rounded-full bg-[#F7EFE7] px-3 py-1 text-[11px] font-bold uppercase tracking-[0.22em] text-[#B46C2B]">Puente Solidario</span>
-            <h1 class="mt-4 text-3xl font-black text-[#2F2A28]">¡Qué bueno verte!</h1>
-            <p class="mt-2 text-sm text-[#6F625D]">Inicia sesión para continuar con tu cuenta</p>
-        </div>
+<div class="login-page">
+    <div class="login-shell">
+        <div class="login-card">
+            <h1 class="login-title">¡Qué bueno verte!</h1>
+            <p class="login-subtitle">Iniciá sesión para continuar</p>
 
-        <form asp-action="Login" asp-controller="Cuenta" method="post" novalidate>
-            @Html.AntiForgeryToken()
+            <form asp-action="Login" asp-controller="Cuenta" method="post" novalidate>
+                @Html.AntiForgeryToken()
 
-            <div asp-validation-summary="ModelOnly" class="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"></div>
+                <div asp-validation-summary="ModelOnly" class="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"></div>
 
-            <div class="mb-6">
-                <label class="mb-3 block text-xs font-bold uppercase tracking-[0.22em] text-[#4A403B]">
-                    Tipo de cuenta
-                </label>
-
-                <div class="grid gap-3 sm:grid-cols-3">
-                    <div>
-                        <input asp-for="TipoCuenta" class="btn-check" type="radio" value="Usuario" id="tipoUsuario" checked />
-                        <label class="btn btn-outline-primary w-100 rounded-xl border border-[#D9D1CA] bg-white px-4 py-3 text-sm fw-semibold text-[#2F2A28] shadow-sm transition hover:bg-[#F8F5F2]" for="tipoUsuario">
-                            Usuario
+                <div class="login-form-group">
+                    <label class="login-label">Tipo de cuenta</label>
+                    <div class="grid gap-3 sm:grid-cols-2">
+                        <label class="login-check flex items-center justify-center rounded-xl border border-[#E6CDB7] bg-white px-3 py-3 text-sm font-bold text-[#3F322B]">
+                            <input asp-for="TipoCuenta" type="radio" value="Usuario" checked />
+                            <span>Usuario</span>
+                        </label>
+                        <label class="login-check flex items-center justify-center rounded-xl border border-[#E6CDB7] bg-white px-3 py-3 text-sm font-bold text-[#3F322B]">
+                            <input asp-for="TipoCuenta" type="radio" value="Ong" />
+                            <span>ONG</span>
                         </label>
                     </div>
-                    <div>
-                        <input asp-for="TipoCuenta" class="btn-check" type="radio" value="Admin" id="tipoAdmin" />
-                        <label class="btn btn-outline-primary w-100 rounded-xl border border-[#D9D1CA] bg-white px-4 py-3 text-sm fw-semibold text-[#2F2A28] shadow-sm transition hover:bg-[#F8F5F2]" for="tipoAdmin">
-                            Admin
-                        </label>
-                    </div>
-                    <div>
-                        <input asp-for="TipoCuenta" class="btn-check" type="radio" value="Ong" id="tipoOng" />
-                        <label class="btn btn-outline-primary w-100 rounded-xl border border-[#D9D1CA] bg-white px-4 py-3 text-sm fw-semibold text-[#2F2A28] shadow-sm transition hover:bg-[#F8F5F2]" for="tipoOng">
-                            ONG
-                        </label>
-                    </div>
+                    <span asp-validation-for="TipoCuenta" class="text-danger small d-block mt-2"></span>
                 </div>
 
-                <span asp-validation-for="TipoCuenta" class="text-danger small d-block mt-2"></span>
-            </div>
-
-            <div class="mb-4">
-                <label asp-for="Email" class="mb-2 block text-xs font-bold uppercase tracking-[0.22em] text-[#4A403B]"></label>
-                <input asp-for="Email" class="w-full rounded-xl border border-[#D9D1CA] bg-[#F9F7F5] px-4 py-3 text-sm text-[#2F2A28] outline-none transition focus:border-[#D98C48] focus:ring-2 focus:ring-[#F3D7BB]" placeholder="correo@ejemplo.com" />
-                <span asp-validation-for="Email" class="text-danger small d-block mt-2"></span>
-            </div>
-
-            <div class="mb-5">
-                <label asp-for="Password" class="mb-2 block text-xs font-bold uppercase tracking-[0.22em] text-[#4A403B]"></label>
-                <div class="relative">
-                    <input asp-for="Password" class="w-full rounded-xl border border-[#D9D1CA] bg-[#F9F7F5] px-4 py-3 pr-12 text-sm text-[#2F2A28] outline-none transition focus:border-[#D98C48] focus:ring-2 focus:ring-[#F3D7BB]" placeholder="••••••••" />
-                    <button type="button" aria-label="Mostrar contraseña" class="absolute inset-y-0 right-3 flex items-center text-[#6F625D]">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="h-5 w-5">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.644C3.42 7.917 7.27 5.5 12 5.5s8.58 2.417 9.964 6.178a1.012 1.012 0 0 1 0 .644C20.58 16.083 16.73 18.5 12 18.5s-8.58-2.417-9.964-6.178Z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z" />
-                        </svg>
-                    </button>
+                <div class="login-form-group">
+                    <label class="login-label">Correo electrónico</label>
+                    <div class="login-input-wrap">
+                        <input asp-for="Email" class="login-input" placeholder="Ingresá tu correo" />
+                        <span class="input-icon">✉</span>
+                    </div>
+                    <span asp-validation-for="Email" class="text-danger small d-block mt-2"></span>
                 </div>
-                <span asp-validation-for="Password" class="text-danger small d-block mt-2"></span>
-            </div>
 
-            <div class="mb-6 flex items-center justify-between gap-3 text-sm">
-                <label class="flex items-center gap-2 text-[#4A403B]">
-                    <input type="checkbox" class="h-4 w-4 rounded border-[#D9D1CA] text-[#D98C48] focus:ring-[#D98C48]" />
-                    Recordarme
-                </label>
-                <a href="#" class="font-medium text-[#3E3631] underline-offset-2 hover:underline">¿Olvidaste tu clave?</a>
-            </div>
+                <div class="login-form-group">
+                    <label class="login-label">Contraseña</label>
+                    <div class="login-input-wrap">
+                        <input asp-for="Password" type="password" class="login-input" placeholder="••••••••" />
+                        <span class="input-icon">◉</span>
+                    </div>
+                    <span asp-validation-for="Password" class="text-danger small d-block mt-2"></span>
+                </div>
 
-            <button type="submit" class="w-full rounded-xl bg-[#D98C48] px-4 py-3 text-base font-bold text-white shadow-sm transition hover:bg-[#c77b38]">
-                Iniciar sesión
-            </button>
-        </form>
+                <div class="login-row">
+                    <label class="login-check">
+                        <input type="checkbox" />
+                        <span>Recordarme</span>
+                    </label>
+                    <a href="#" class="login-link-small">¿Olvidaste tu clave?</a>
+                </div>
 
-        <div class="mt-6 grid gap-3 sm:grid-cols-2">
-            <a href="/Auth/RegistroPersonal" class="inline-flex items-center justify-center rounded-xl border border-[#D9D1CA] bg-white px-4 py-3 text-sm font-semibold text-[#2F2A28] transition hover:bg-[#F8F5F2]">
-                Crear cuenta personal →
-            </a>
-            <a href="/Auth/RegistroOrg" class="inline-flex items-center justify-center rounded-xl border border-[#D9D1CA] bg-white px-4 py-3 text-sm font-semibold text-[#2F2A28] transition hover:bg-[#F8F5F2]">
-                Registrar organización →
-            </a>
+                <button type="submit" class="login-btn">Iniciar sesión</button>
+
+                <a href="/Auth/RegistroPersonal" class="login-alt-btn d-block text-center leading-[3rem]">Crear cuenta personal →</a>
+                <a href="/Auth/RegistroOrg" class="login-alt-btn d-block text-center leading-[3rem]">Registrar organización →</a>
+            </form>
         </div>
     </div>
 </div>

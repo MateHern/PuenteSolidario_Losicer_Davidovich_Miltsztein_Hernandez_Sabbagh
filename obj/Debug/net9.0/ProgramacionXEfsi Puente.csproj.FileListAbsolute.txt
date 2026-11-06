@@ -519,3 +519,109 @@ C:\Users\50030354\Desktop\CLON\PuenteSolidario_Losicer_Davidovich_Miltsztein_Her
 C:\Users\50030354\Desktop\CLON\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\ProgramacionXEfsi Puente.pdb
 C:\Users\50030354\Desktop\CLON\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\ProgramacionXEfsi Puente.genruntimeconfig.cache
 C:\Users\50030354\Desktop\CLON\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\ref\ProgramacionXEfsi Puente.dll
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\bin\Debug\net9.0\appsettings.Development.json
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\bin\Debug\net9.0\appsettings.json
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\bin\Debug\net9.0\ProgramacionXEfsi Puente.staticwebassets.runtime.json
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\bin\Debug\net9.0\ProgramacionXEfsi Puente.staticwebassets.endpoints.json
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\bin\Debug\net9.0\ProgramacionXEfsi Puente.exe
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\bin\Debug\net9.0\ProgramacionXEfsi Puente.deps.json
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\bin\Debug\net9.0\ProgramacionXEfsi Puente.runtimeconfig.json
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\bin\Debug\net9.0\ProgramacionXEfsi Puente.dll
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\bin\Debug\net9.0\ProgramacionXEfsi Puente.pdb
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\bin\Debug\net9.0\Dapper.dll
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\bin\Debug\net9.0\System.Data.SqlClient.dll
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\bin\Debug\net9.0\runtimes\win-arm64\native\sni.dll
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\bin\Debug\net9.0\runtimes\win-x64\native\sni.dll
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\bin\Debug\net9.0\runtimes\win-x86\native\sni.dll
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\bin\Debug\net9.0\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\bin\Debug\net9.0\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\ProgramacionXEfsi Puente.csproj.AssemblyReference.cache
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\rpswa.dswa.cache.json
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\ProgramacionXEfsi Puente.GeneratedMSBuildEditorConfig.editorconfig
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\ProgramacionXEfsi Puente.AssemblyInfoInputs.cache
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\ProgramacionXEfsi Puente.AssemblyInfo.cs
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\ProgramacionXEfsi Puente.csproj.CoreCompileInputs.cache
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\ProgramacionXEfsi Puente.MvcApplicationPartsAssemblyInfo.cache
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\ProgramacionXEfsi Puente.RazorAssemblyInfo.cache
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\ProgramacionXEfsi Puente.RazorAssemblyInfo.cs
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\ProgramacionXEfsi Puente.sourcelink.json
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\rjimswa.dswa.cache.json
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\scopedcss\bundle\ProgramacionXEfsi Puente.styles.css
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\scopedcss\projectbundle\ProgramacionXEfsi Puente.bundle.scp.css
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\276pfky7bw-61n19gt1b8.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\k2iwrr9vsh-t1cqhe9u97.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\71gnops2pa-c2jlpeoesf.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\w6j68x9nwp-sejl45xvog.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\jilop6cf1p-aexeepp0ev.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\dqflnx39sb-xvp3kq03qx.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\rl1oqer73h-ausgxo2sd3.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\s5ozsz5442-22vffe00uq.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\hx446mehts-cosvhxvwiu.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\ctucq1jkdm-qesaa3a1fm.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\c07vrsyw2d-fvhpjtyr6v.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\hlbqoocxe7-tmc1g35s3z.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\cehpy1cghk-fsbi9cje9m.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\ejp7ssgf7l-rxsg74s51o.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\0p2hjo2547-ee0r1s7dh0.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\dxu8kgjh84-q9ht133ko3.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\1p3tp30lec-jd9uben2k1.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\6czwdc1zra-gye83jo8yx.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\2kt02qedds-r4e9w2rdcm.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\dd4q9lskm3-wl58j5mj3v.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\vabfoqnegp-c2oey78nd0.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\4r60u094lb-d4r6k3f320.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\o6zorejlsj-j5mq2jizvt.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\5xmh1mx160-keugtjm085.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\77zqaeo90b-nvvlpmu67g.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\3ltavstbbe-zub09dkrxp.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\t4r4fqd7kq-pj5nd1wqec.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\tvxuv6sbu1-43atpzeawx.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\rrj8oi7lg6-v0zj4ognzu.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\0x1ym8wadx-ynyaa8k90p.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\gmjh8znzwb-hrwsygsryq.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\j3fa3s713t-c63t5i9ira.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\5538iv9vzc-ft3s53vfgj.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\4dqg2invsk-4094rpi4f9.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\xz15wvjw95-6pdc2jztkx.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\dyoabwmg3o-hd3gran6i8.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\0aokq83taj-iovd86k7lj.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\l5on95e3zb-ltid2c489k.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\vklbamoexx-kbrnm935zg.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\i03pt1dsog-8vyfqsqgz1.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\8fij9oo1ub-y7v9cxd14o.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\gvtocc3mo6-u9q1upor1n.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\a91w93hzlm-h1s4sie4z3.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\fcuu2pmzrc-4d85u1mtcx.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\070au6o7h4-0j3bgjxly4.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\mni4iqr5cb-03hjc8e09r.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\9szgjom0xi-48y08845bh.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\7cwagf74ja-356vix0kms.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\py0kld4rpf-83jwlth58m.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\sb7ytnsi35-mrlpezrjn3.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\q70ivkuu0k-worgj0nhwm.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\lz9cu1c6ox-gk0pw8i4co.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\4otmsm6hs6-x0q3zqp4vz.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\tn16pf1oj2-d6nrnj6jjx.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\16k4j4k7yu-m9qm4tazc0.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\h136zhs4ue-ttgo8qnofa.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\8r6t49q19w-jjsuc0puko.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\ix7ug66dif-9vr69e8ynj.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\fls3fsta2v-87fc7y1x7t.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\qrpy2rmuwm-mlv21k5csn.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\mhwt1f7jil-gukaizxjmf.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\d400jpxe7l-gukaizxjmf.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\staticwebassets.build.json
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\staticwebassets.build.json.cache
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\staticwebassets.development.json
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\staticwebassets.build.endpoints.json
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\Programa.08419C46.Up2Date
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\ProgramacionXEfsi Puente.dll
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\refint\ProgramacionXEfsi Puente.dll
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\ProgramacionXEfsi Puente.pdb
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\ProgramacionXEfsi Puente.genruntimeconfig.cache
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\ref\ProgramacionXEfsi Puente.dll
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\5c8jmzfwsh-aedqpeuvas.gz
+Z:\2026\INFO 360\PUENTE DEF\PuenteSolidario_Losicer_Davidovich_Miltsztein_Hernandez_Sabbagh\obj\Debug\net9.0\compressed\3q19l3g2n3-g9vvz04qdx.gz

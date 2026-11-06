@@ -5,7 +5,7 @@ namespace ProgramacionXEfsi_Puente.Controllers
 {
     public class AdminController : Controller
     {
-        [RequireRole("Admin", "AdminMadre")]
+        [RequireRole("Admin")]
         public IActionResult AprobarOngs()
         {
             var pendientes = BD.ObtenerOngsPendientes();
@@ -14,7 +14,7 @@ namespace ProgramacionXEfsi_Puente.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [RequireRole("Admin", "AdminMadre")]
+        [RequireRole("Admin")]
         public IActionResult AprobarOngs(int id)
         {
             BD.AprobarOrganizacion(id);
@@ -22,7 +22,7 @@ namespace ProgramacionXEfsi_Puente.Controllers
         }
 
         [HttpGet]
-        [RequireRole("AdminMadre")]
+        [RequireRole("Admin")]
         public IActionResult CrearAdmin()
         {
             return View();
@@ -30,7 +30,7 @@ namespace ProgramacionXEfsi_Puente.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [RequireRole("AdminMadre")]
+        [RequireRole("Admin")]
         public IActionResult CrearAdmin(string nombre, string apellido, string email, string password, string confirmPassword)
         {
             if (string.IsNullOrWhiteSpace(nombre) || string.IsNullOrWhiteSpace(apellido) || string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))

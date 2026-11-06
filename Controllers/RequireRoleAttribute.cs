@@ -36,6 +36,12 @@ namespace ProgramacionXEfsi_Puente.Controllers
                 return;
             }
 
+            if (string.Equals(rol, "Admin", StringComparison.OrdinalIgnoreCase) && !session.GetInt32("UsuarioId").HasValue)
+            {
+                RedirectToLogin(context, "Tu sesión de administrador no es válida.");
+                return;
+            }
+
             if (string.Equals(rol, "Ong", StringComparison.OrdinalIgnoreCase) && !session.GetInt32("OngId").HasValue)
             {
                 RedirectToLogin(context, "Tu sesión de ONG no es válida.");

@@ -1,5 +1,8 @@
 @{
     ViewData["Title"] = "Donar";
+    var nombre = ViewBag.UsuarioNombre as string ?? "Usuario";
+    var apellido = ViewBag.UsuarioApellido as string ?? string.Empty;
+    var email = ViewBag.UsuarioEmail as string ?? string.Empty;
 }
 
 <div class="grid grid-cols-1 gap-12 py-12 md:grid-cols-2">
@@ -35,44 +38,46 @@
     <div class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-[#E8E1DB] md:p-8">
         <h2 class="text-3xl font-black text-[#2F2A28]">Quiero colaborar</h2>
 
-        <form asp-action="Submit" method="post" class="mt-6 space-y-5">
-            <div class="grid gap-5 md:grid-cols-2">
-                <div>
-                    <label for="nombre" class="mb-2 block text-xs font-bold tracking-[0.18em] text-[#4A403B]">NOMBRE</label>
-                    <input id="nombre" name="nombre" type="text" class="w-full rounded-xl border border-[#D9D1CA] bg-[#F9F7F5] px-4 py-3 text-sm text-[#2F2A28] outline-none transition focus:border-[#2F9D9D] focus:ring-2 focus:ring-[#CFEAEA]" />
-                </div>
-
-                <div>
-                    <label for="apellido" class="mb-2 block text-xs font-bold tracking-[0.18em] text-[#4A403B]">APELLIDO</label>
-                    <input id="apellido" name="apellido" type="text" class="w-full rounded-xl border border-[#D9D1CA] bg-[#F9F7F5] px-4 py-3 text-sm text-[#2F2A28] outline-none transition focus:border-[#2F9D9D] focus:ring-2 focus:ring-[#CFEAEA]" />
-                </div>
+        @if (!string.IsNullOrWhiteSpace(email))
+        {
+            <div class="mt-4 rounded-xl bg-[#F5F7F6] p-3 text-sm text-[#3E3631]">
+                <span class="font-semibold">Donando como:</span> @nombre @apellido
             </div>
+        }
 
-            <div>
-                <label for="correo" class="mb-2 block text-xs font-bold tracking-[0.18em] text-[#4A403B]">CORREO ELECTRÓNICO</label>
-                <input id="correo" name="correo" type="email" class="w-full rounded-xl border border-[#D9D1CA] bg-[#F9F7F5] px-4 py-3 text-sm text-[#2F2A28] outline-none transition focus:border-[#2F9D9D] focus:ring-2 focus:ring-[#CFEAEA]" />
-            </div>
+        <form asp-action="Submit" asp-controller="Donar" method="post" class="mt-6 space-y-5">
+            @Html.AntiForgeryToken()
 
             <div class="grid gap-5 md:grid-cols-2">
                 <div>
                     <label for="tipoAporte" class="mb-2 block text-xs font-bold tracking-[0.18em] text-[#4A403B]">TIPO DE APORTE</label>
                     <select id="tipoAporte" name="tipoAporte" class="w-full rounded-xl border border-[#D9D1CA] bg-[#F9F7F5] px-4 py-3 text-sm text-[#2F2A28] outline-none transition focus:border-[#2F9D9D] focus:ring-2 focus:ring-[#CFEAEA]">
-                        <option>Donación</option>
-                        <option>Voluntariado</option>
-                        <option>Transporte</option>
-                        <option>Recurso material</option>
+                        <option value="Donación">Donación</option>
+                        <option value="Dinero">Dinero</option>
+                        <option value="Ropa">Ropa</option>
+                        <option value="Alimentos">Alimentos</option>
+                        <option value="Útiles">Útiles</option>
                     </select>
                 </div>
 
                 <div>
-                    <label for="cantidad" class="mb-2 block text-xs font-bold tracking-[0.18em] text-[#4A403B]">CANTIDAD</label>
-                    <input id="cantidad" name="cantidad" type="text" value="$ 500" class="w-full rounded-xl border border-[#D9D1CA] bg-[#F9F7F5] px-4 py-3 text-sm text-[#2F2A28] outline-none transition focus:border-[#2F9D9D] focus:ring-2 focus:ring-[#CFEAEA]" />
+                    <label for="cantidad" class="mb-2 block text-xs font-bold tracking-[0.18em] text-[#4A403B]">CANTIDAD / DETALLE</label>
+                    <input id="cantidad" name="cantidad" type="text" placeholder="$ 500 o 10 kilos" class="w-full rounded-xl border border-[#D9D1CA] bg-[#F9F7F5] px-4 py-3 text-sm text-[#2F2A28] outline-none transition focus:border-[#2F9D9D] focus:ring-2 focus:ring-[#CFEAEA]" required />
                 </div>
             </div>
 
             <div>
                 <label for="mensaje" class="mb-2 block text-xs font-bold tracking-[0.18em] text-[#4A403B]">MENSAJE</label>
-                <textarea id="mensaje" name="mensaje" rows="5" class="w-full rounded-xl border border-[#D9D1CA] bg-[#F9F7F5] px-4 py-3 text-sm text-[#2F2A28] outline-none transition focus:border-[#2F9D9D] focus:ring-2 focus:ring-[#CFEAEA]"></textarea>
+                <textarea id="mensaje" name="mensaje" rows="5" class="w-full rounded-xl border border-[#D9D1CA] bg-[#F9F7F5] px-4 py-3 text-sm text-[#2F2A28] outline-none transition focus:border-[#2F9D9D] focus:ring-2 focus:ring-[#CFEAEA]" placeholder="Dejanos un mensaje para la ONG"></textarea>
+            </div>
+
+            <div class="flex items-center gap-3 rounded-xl bg-[#F6F3F1] p-3">
+                <input id="donarAnonimamente" name="donarAnonimamente" type="checkbox" value="true" class="h-4 w-4 rounded border-[#D9D1CA] text-[#2F9D9D] focus:ring-[#CFEAEA]" />
+                <label for="donarAnonimamente" class="text-sm font-medium text-[#2F2A28]">Donar anónimamente</label>
+            </div>
+
+            <div id="mensajeAnonimo" class="hidden rounded-xl border border-dashed border-[#D9D1CA] bg-[#F9F7F5] px-3 py-2 text-sm text-[#4A403B]">
+                Estás donando como anónimo.
             </div>
 
             <button type="submit" class="w-full rounded-xl bg-[#2F2A28] px-4 py-3.5 text-base font-bold text-white transition hover:bg-[#1d1b1a]">
@@ -81,3 +86,12 @@
         </form>
     </div>
 </div>
+
+<script>
+    const checkboxAnonimo = document.getElementById('donarAnonimamente');
+    const mensajeAnonimo = document.getElementById('mensajeAnonimo');
+
+    checkboxAnonimo.addEventListener('change', function () {
+        mensajeAnonimo.classList.toggle('hidden', !checkboxAnonimo.checked);
+    });
+</script>

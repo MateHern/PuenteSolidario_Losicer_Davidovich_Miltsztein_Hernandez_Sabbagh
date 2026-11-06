@@ -2,93 +2,109 @@
 @{
     ViewData["Title"] = "Catálogo";
     var isLoggedIn = !string.IsNullOrWhiteSpace(Context.Session.GetString("Rol"));
+    var categorias = ViewBag.Categorias as List<string> ?? new List<string>();
+    var provincias = ViewBag.Provincias as List<string> ?? new List<string>();
+    var categoriaSeleccionada = ViewBag.CategoriaSeleccionada as string ?? string.Empty;
+    var ubicacionSeleccionada = ViewBag.UbicacionSeleccionada as string ?? string.Empty;
 }
 
-<div class="space-y-8 py-10">
-    <div class="space-y-3">
-        <p class="text-sm font-semibold uppercase tracking-[0.2em] text-[#6F625D]">EXPLORÁ OPORTUNIDADES</p>
-        <h1 class="text-4xl font-black text-[#2F2A28] md:text-5xl">Encontrá una organización que te necesite</h1>
-        <p class="max-w-2xl text-lg text-[#4A403B]">Descubrí organizaciones activas en la base de datos y apoyá sus causas.</p>
-    </div>
-
-    <div class="rounded-2xl border border-[#E8E1DB] bg-white p-3 shadow-sm">
-        <div class="flex flex-col gap-0 md:flex-row md:items-center">
-            <div class="flex-1 border-b border-[#E8E1DB] px-3 py-3 md:border-b-0 md:border-r md:px-4">
-                <input type="text" placeholder="Buscar una causa..." class="w-full border-0 bg-transparent text-sm text-[#2F2A28] placeholder:text-[#867B76] focus:outline-none" />
+<div class="catalog-page app-shell">
+    <header class="catalog-header">
+        <div class="flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+                <div class="site-brand-mark">P</div>
+                <div class="site-brand">Puente Solidario</div>
             </div>
 
-            <div class="flex-1 border-b border-[#E8E1DB] px-3 py-3 md:border-b-0 md:border-r md:px-4">
-                <select class="w-full appearance-none border-0 bg-transparent text-sm text-[#2F2A28] focus:outline-none">
-                    <option>Todas las categorías</option>
-                    <option>Donaciones</option>
-                    <option>Voluntariado</option>
-                    <option>Salud</option>
-                    <option>Infraestructura</option>
-                    <option>Animales</option>
-                </select>
+            <div class="hidden items-center gap-8 md:flex">
+                <a href="/" class="text-lg font-medium text-[#3F322B]">Inicio</a>
+                <a href="/Catalogo" class="text-lg font-medium text-[#3F322B] underline decoration-[#62C2B9] decoration-2 underline-offset-8">Catálogo</a>
+                <a href="/Usuario/Perfil" class="text-lg font-medium text-[#3F322B]">Perfil</a>
             </div>
 
-            <div class="flex-1 border-b border-[#E8E1DB] px-3 py-3 md:border-b-0 md:border-r md:px-4">
-                <select class="w-full appearance-none border-0 bg-transparent text-sm text-[#2F2A28] focus:outline-none">
-                    <option>Ubicación</option>
-                    <option>Buenos Aires</option>
-                    <option>Córdoba</option>
-                    <option>Rosario</option>
-                    <option>Santa Fe</option>
-                </select>
-            </div>
-
-            <div class="px-3 py-3 md:px-4">
-                <button type="button" class="rounded-xl bg-[#E9E3DE] px-5 py-2.5 text-sm font-semibold text-[#2F2A28] transition hover:bg-[#DDD1C8]">
-                    Aplicar filtros
-                </button>
+            <div class="flex items-center gap-3">
+                @if (!isLoggedIn)
+                {
+                    <a href="/Cuenta/Login" class="rounded-full bg-[#F2E2D3] px-4 py-2 text-sm font-semibold text-[#3F322B]">Ingresar / Crear cuenta</a>
+                }
+                else
+                {
+                    <a href="/Cuenta/Logout" class="rounded-full bg-[#F2E2D3] px-4 py-2 text-sm font-semibold text-[#3F322B]">Cerrar sesión</a>
+                }
             </div>
         </div>
-    </div>
+    </header>
 
-    @if (Model != null && Model.Any())
-    {
-        <div class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+    <section class="catalog-hero px-4 md:px-6">
+        <div class="catalog-title">Encontra una organización que te necesite</div>
+        <p class="catalog-subtitle">Filtrá por tipo de ayuda, ubicación o grupo de personas</p>
+
+        <form method="get" asp-controller="Catalogo" asp-action="Index" class="catalog-filters">
+            <input type="text" name="busqueda" value="@ViewBag.Busqueda" placeholder="Buscar una causa..." class="filter-field" />
+
+            <select name="categoria" class="filter-field">
+                <option value="">Todos las categorías</option>
+                @foreach (var categoria in categorias)
+                {
+                    <option value="@categoria" selected="@(categoria == categoriaSeleccionada ? "selected" : null)">@categoria</option>
+                }
+            </select>
+
+            <select name="ubicacion" class="filter-field">
+                <option value="">Todas las provincias</option>
+                @foreach (var provincia in provincias)
+                {
+                    <option value="@provincia" selected="@(provincia == ubicacionSeleccionada ? "selected" : null)">@provincia</option>
+                }
+            </select>
+
+            <button type="submit" class="catalog-btn">Aplicar filtros</button>
+        </form>
+    </section>
+
+    <section class="catalog-grid px-4 md:px-6">
+        @if (Model != null && Model.Any())
+        {
             @foreach (var organizacion in Model)
             {
-                <article class="overflow-hidden rounded-2xl border border-[#E7E2DE] bg-[#F2F2F2] p-4 shadow-sm">
-                    <div class="relative mb-4 h-40 rounded-xl bg-gradient-to-r from-[#D98C48] to-[#B66C3B]">
-                        <span class="absolute left-3 top-3 rounded-full bg-white px-2.5 py-1 text-[10px] font-bold tracking-[0.18em] text-[#3E3631] shadow-sm">
-                            ORGANIZACIÓN
-                        </span>
+                var tone = (organizacion.Nombre?.Length ?? 0) % 6;
+                var variant = tone switch
+                {
+                    0 => "catalog-card--orange",
+                    1 => "catalog-card--yellow",
+                    2 => "catalog-card--mint",
+                    3 => "catalog-card--sky",
+                    4 => "catalog-card--peach",
+                    _ => "catalog-card--cream"
+                };
+
+                <article class="catalog-card @variant">
+                    <div class="catalog-card-image">
+                        <span class="catalog-card-tag">@((organizacion.Nombre?.Contains("volunt") == true ? "Voluntariado" : (organizacion.Nombre?.Contains("salud") == true ? "Salud" : "Donaciones")))</span>
                     </div>
-
-                    <h3 class="text-2xl font-bold text-[#2F2A28]">@organizacion.Nombre</h3>
-                    <p class="mt-3 text-base leading-7 text-[#4A403B]">
-                        <span class="font-semibold text-[#2F2A28]">Dirección:</span> @organizacion.Direccion
-                    </p>
-                    <p class="mt-1 text-base leading-7 text-[#4A403B]">
-                        <span class="font-semibold text-[#2F2A28]">Barrio:</span> @organizacion.Barrio
-                    </p>
-                    <p class="mt-1 text-base leading-7 text-[#4A403B]">
-                        <span class="font-semibold text-[#2F2A28]">Teléfono:</span> @organizacion.Telefono
-                    </p>
-
-                    @if (isLoggedIn)
-                    {
-                        <a href="/Donar" class="mt-5 inline-flex items-center text-base font-semibold text-[#3E3631] transition hover:text-[#7A6050]">
-                            Conocer más -&gt;
-                        </a>
-                    }
-                    else
-                    {
-                        <a href="/Cuenta/Login" class="mt-5 inline-flex items-center text-base font-semibold text-[#3E3631] transition hover:text-[#7A6050]">
-                            Conocer más -&gt;
-                        </a>
-                    }
+                    <div class="catalog-card-body">
+                        <h3>@organizacion.Nombre</h3>
+                        <p>@organizacion.Direccion</p>
+                        <a href="/Cuenta/Login" class="catalog-link">Conocer más →</a>
+                    </div>
                 </article>
             }
-        </div>
-    }
-    else
-    {
-        <div class="rounded-xl border border-yellow-200 bg-yellow-50 px-4 py-3 text-yellow-700">
-            No hay organizaciones cargadas en la base de datos.
-        </div>
-    }
+        }
+        else
+        {
+            <div class="rounded-xl border border-yellow-200 bg-yellow-50 px-4 py-3 text-yellow-700">No hay organizaciones que coincidan con ese filtro.</div>
+        }
+    </section>
 </div>
+
+<footer class="site-footer">
+    <div class="site-footer-inner">
+        <div class="site-footer-brand">Puente Solidario · Ayudar nos conecta</div>
+        <div class="site-footer-links">
+            <a href="#">Contacto</a>
+            <a href="#">Instagram</a>
+            <a href="#">Privacidad</a>
+            <span>© 2026</span>
+        </div>
+    </div>
+</footer>

@@ -15,23 +15,36 @@ namespace ProgramacionXEfsi_Puente.Controllers
             return (rol ?? string.Empty).Trim();
         }
 
-        private static bool EsRolUsuarioValido(string? rol)
+        private static string CanonicalizarRol(string? rol)
         {
             var normalized = NormalizarRol(rol);
-            return string.Equals(normalized, "Usuario", StringComparison.OrdinalIgnoreCase)
-                || string.Equals(normalized, "Admin", StringComparison.OrdinalIgnoreCase)
-                || string.Equals(normalized, "AdminMadre", StringComparison.OrdinalIgnoreCase)
+
+            if (string.Equals(normalized, "AdminMadre", StringComparison.OrdinalIgnoreCase))
+            {
+                return "Admin";
+            }
+
+            if (string.Equals(normalized, "Admin", StringComparison.OrdinalIgnoreCase)
                 || string.Equals(normalized, "Administrador", StringComparison.OrdinalIgnoreCase)
-                || string.Equals(normalized, "SuperAdmin", StringComparison.OrdinalIgnoreCase);
+                || string.Equals(normalized, "SuperAdmin", StringComparison.OrdinalIgnoreCase))
+            {
+                return "Admin";
+            }
+
+            if (string.Equals(normalized, "Ong", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(normalized, "ONG", StringComparison.OrdinalIgnoreCase))
+            {
+                return "Ong";
+            }
+
+            return "Usuario";
         }
 
-        private static bool EsRolAdministrador(string? rol)
+        private static bool EsRolUsuarioValido(string? rol)
         {
-            var normalized = NormalizarRol(rol);
-            return string.Equals(normalized, "Admin", StringComparison.OrdinalIgnoreCase)
-                || string.Equals(normalized, "AdminMadre", StringComparison.OrdinalIgnoreCase)
-                || string.Equals(normalized, "Administrador", StringComparison.OrdinalIgnoreCase)
-                || string.Equals(normalized, "SuperAdmin", StringComparison.OrdinalIgnoreCase);
+            var normalized = CanonicalizarRol(rol);
+            return string.Equals(normalized, "Usuario", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(normalized, "Admin", StringComparison.OrdinalIgnoreCase);
         }
 
         private class UsuarioLoginRow
@@ -69,7 +82,7 @@ namespace ProgramacionXEfsi_Puente.Controllers
 
             var email = model.Email.Trim();
 
-            if (model.TipoCuenta == "Usuario" || model.TipoCuenta == "Admin")
+            if (string.Equals(model.TipoCuenta, "Usuario", StringComparison.OrdinalIgnoreCase))
             {
                 using var connection = new SqlConnection(ConnectionString);
                 var usuario = await connection.QueryFirstOrDefaultAsync<UsuarioLoginRow>(
@@ -78,30 +91,32 @@ namespace ProgramacionXEfsi_Puente.Controllers
 
                 if (usuario != null)
                 {
-                    string storedPassword = usuario.Clave ?? string.Empty;
+                    var storedPassword = usuario.Clave ?? string.Empty;
                     if (!string.IsNullOrWhiteSpace(storedPassword) && string.Equals(model.Password, storedPassword, StringComparison.Ordinal))
                     {
-                        var rol = NormalizarRol(usuario.Rol);
-                        if (!EsRolUsuarioValido(rol))
+                        var rolDb = NormalizarRol(usuario.Rol);
+                        var rolSesion = CanonicalizarRol(rolDb);
+
+                        if (!EsRolUsuarioValido(rolDb))
                         {
                             ModelState.AddModelError(string.Empty, "Ese usuario no tiene un rol válido para iniciar sesión.");
                             return View(model);
                         }
 
-                        if (model.TipoCuenta == "Admin" && !EsRolAdministrador(rol))
+                        HttpContext.Session.SetInt32("UsuarioId", usuario.Id);
+                        HttpContext.Session.SetString("Rol", rolSesion);
+                        HttpContext.Session.SetString("UsuarioNombre", usuario.Nombre ?? "Usuario");
+
+                        if (string.Equals(rolSesion, "Admin", StringComparison.OrdinalIgnoreCase))
                         {
-                            ModelState.AddModelError(string.Empty, "Este usuario no tiene permisos de administrador.");
-                            return View(model);
+                            return RedirectToAction("AprobarOngs", "Admin");
                         }
 
-                        HttpContext.Session.SetInt32("UsuarioId", usuario.Id);
-                        HttpContext.Session.SetString("Rol", rol);
-                        HttpContext.Session.SetString("UsuarioNombre", usuario.Nombre ?? "Usuario");
                         return RedirectToAction("Index", "Home");
                     }
                 }
             }
-            else if (model.TipoCuenta == "Ong")
+            else if (string.Equals(model.TipoCuenta, "Ong", StringComparison.OrdinalIgnoreCase))
             {
                 using var connection = new SqlConnection(ConnectionString);
                 var ong = await connection.QueryFirstOrDefaultAsync<OngLoginRow>(
@@ -116,13 +131,41 @@ namespace ProgramacionXEfsi_Puente.Controllers
                         return View(model);
                     }
 
-                    string storedPassword = ong.Clave ?? string.Empty;
+                    var storedPassword = ong.Clave ?? string.Empty;
                     if (!string.IsNullOrWhiteSpace(storedPassword) && string.Equals(model.Password, storedPassword, StringComparison.Ordinal))
                     {
                         HttpContext.Session.SetInt32("OngId", ong.Id);
                         HttpContext.Session.SetString("Rol", "Ong");
                         HttpContext.Session.SetString("OngNombre", ong.Nombre ?? "ONG");
                         return RedirectToAction("Index", "Home");
+                    }
+                }
+            }
+            else if (string.Equals(model.TipoCuenta, "Admin", StringComparison.OrdinalIgnoreCase))
+            {
+                using var connection = new SqlConnection(ConnectionString);
+                var usuario = await connection.QueryFirstOrDefaultAsync<UsuarioLoginRow>(
+                    "SELECT TOP 1 Id, Nombre, Contraseña AS Clave, Rol FROM Usuarios WHERE Mail = @Email",
+                    new { Email = email });
+
+                if (usuario != null)
+                {
+                    var storedPassword = usuario.Clave ?? string.Empty;
+                    if (!string.IsNullOrWhiteSpace(storedPassword) && string.Equals(model.Password, storedPassword, StringComparison.Ordinal))
+                    {
+                        var rolDb = NormalizarRol(usuario.Rol);
+                        var rolSesion = CanonicalizarRol(rolDb);
+
+                        if (!string.Equals(rolSesion, "Admin", StringComparison.OrdinalIgnoreCase))
+                        {
+                            ModelState.AddModelError(string.Empty, "Ese usuario no tiene permisos de administrador.");
+                            return View(model);
+                        }
+
+                        HttpContext.Session.SetInt32("UsuarioId", usuario.Id);
+                        HttpContext.Session.SetString("Rol", rolSesion);
+                        HttpContext.Session.SetString("UsuarioNombre", usuario.Nombre ?? "Admin");
+                        return RedirectToAction("AprobarOngs", "Admin");
                     }
                 }
             }
