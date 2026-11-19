@@ -114,6 +114,33 @@
                     </div>
                 }
 
+                @if (Model?.NecesidadesDetalle?.Any() == true)
+                {
+                    <div class="mt-6 rounded-2xl bg-[#F8F5F2] p-5 ring-1 ring-[#E6DDD4]">
+                        <div class="flex items-center justify-between gap-4">
+                            <p class="text-xs font-black uppercase tracking-[0.18em] text-[#6F625D]">Progreso general</p>
+                            <p class="text-sm font-black text-[#2F2A28]">@Model.PorcentajeGeneral%</p>
+                        </div>
+                        <div class="mt-3 h-3 overflow-hidden rounded-full bg-[#E8DFD6]">
+                            <div class="h-full rounded-full bg-[#62C2B9]" style="width: @Model.PorcentajeGeneral%"></div>
+                        </div>
+                        <div class="mt-5 space-y-4">
+                            @foreach (var necesidad in Model.NecesidadesDetalle)
+                            {
+                                <div>
+                                    <div class="flex items-center justify-between gap-3 text-sm">
+                                        <span class="font-bold text-[#2F2A28]">@necesidad.Categoria</span>
+                                        <span class="text-[#6F625D]">@necesidad.CantidadRecibida / @necesidad.CantidadSolicitada · @necesidad.Porcentaje%</span>
+                                    </div>
+                                    <div class="mt-2 h-2.5 overflow-hidden rounded-full bg-[#E8DFD6]">
+                                        <div class="h-full rounded-full bg-[#FF7341]" style="width: @necesidad.Porcentaje%"></div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+
                 <div class="mt-8 flex flex-col gap-3 sm:flex-row">
                     @if (esUsuario)
                     {

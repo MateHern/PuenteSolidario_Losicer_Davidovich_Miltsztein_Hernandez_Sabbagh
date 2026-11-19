@@ -71,6 +71,18 @@
                         <p class="mb-2 text-sm font-semibold text-[#4A403B]">@publicacion.NombreOrganizacion</p>
                         <p>@publicacion.Ubicacion</p>
                         <p class="mt-2 text-sm text-[#5B4E46]">@publicacion.Descripcion</p>
+                        @if (publicacion.NecesidadesDetalle?.Any() == true)
+                        {
+                            <div class="mt-3">
+                                <div class="flex items-center justify-between text-xs font-bold text-[#5F6B6A]">
+                                    <span>Progreso</span>
+                                    <span>@publicacion.PorcentajeGeneral%</span>
+                                </div>
+                                <div class="mt-2 h-2 overflow-hidden rounded-full bg-[#E8DFD6]">
+                                    <div class="h-full rounded-full bg-[#62C2B9]" style="width: @publicacion.PorcentajeGeneral%"></div>
+                                </div>
+                            </div>
+                        }
                         @if (publicacion.FechaLimite.HasValue)
                         {
                             <p class="mt-2 text-xs font-semibold uppercase tracking-[0.14em] text-[#5F6B6A]">Fecha límite: @publicacion.FechaLimite.Value.ToString("dd/MM/yyyy")</p>

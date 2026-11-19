@@ -28,6 +28,12 @@ public class DonarController : Controller
             publicacion = BD.ObtenerPublicacionPorId(idPublicacion.Value);
             if (publicacion != null)
             {
+                if (publicacion.PorcentajeGeneral >= 100)
+                {
+                    TempData["DonacionError"] = "Esta publicación ya alcanzó su meta y no admite nuevas donaciones.";
+                    return RedirectToAction("Index", "Catalogo");
+                }
+
                 organizacionSeleccionada = BD.ObtenerOrganizacionPorId(publicacion.IdOrganizacion);
             }
         }
@@ -59,7 +65,7 @@ public class DonarController : Controller
     [HttpPost]
     [ValidateAntiForgeryToken]
     [RequireRole("Usuario")]
-    public IActionResult Submit(int idOrganizacion, int idPublicacion, string tipoAporte, string cantidad, string mensaje, bool donarAnonimamente)
+    public IActionResult Submit(int idOrganizacion, int idPublicacion, int idNecesidad, int cantidadNumerica, string tipoAporte, string cantidad, string mensaje, bool donarAnonimamente)
     {
         var usuarioId = HttpContext.Session.GetInt32("UsuarioId");
         if (!usuarioId.HasValue)
@@ -69,40 +75,29 @@ public class DonarController : Controller
 
         if (idPublicacion > 0)
         {
-            var publicacion = BD.ObtenerPublicacionPorId(idPublicacion);
-            if (publicacion == null)
+            if (idNecesidad <= 0 || cantidadNumerica <= 0)
             {
-                TempData["DonacionError"] = "La publicación ya no está disponible.";
-                return RedirectToAction("Index", "Catalogo");
+                TempData["DonacionError"] = "Seleccioná una necesidad y una cantidad válida.";
+                return RedirectToAction("Index", "Donar", new { idOrganizacion, idPublicacion });
             }
 
-            idOrganizacion = publicacion.IdOrganizacion;
+            var resultado = BD.RegistrarDonacionPublicacion(usuarioId.Value, idPublicacion, idNecesidad, cantidadNumerica, mensaje ?? string.Empty);
+            if (resultado.Resultado != 1)
+            {
+                TempData["DonacionError"] = resultado.Mensaje;
+                return RedirectToAction("Index", "Donar", new { idOrganizacion, idPublicacion });
+            }
         }
-
-        if (idOrganizacion <= 0)
+        else
         {
-            TempData["DonacionError"] = "No se pudo identificar la organización destinataria.";
-            return RedirectToAction("Index", "Catalogo");
-        }
+            if (string.IsNullOrWhiteSpace(cantidad))
+            {
+                TempData["DonacionError"] = "Ingresá la cantidad o el detalle del aporte.";
+                return RedirectToAction("Index", "Donar", new { idOrganizacion, idPublicacion });
+            }
 
-        if (string.IsNullOrWhiteSpace(tipoAporte))
-        {
-            tipoAporte = "Donación";
+            BD.RegistrarDonacion(usuarioId.Value, idOrganizacion, tipoAporte, cantidad, mensaje ?? string.Empty);
         }
-
-        if (string.IsNullOrWhiteSpace(cantidad))
-        {
-            TempData["DonacionError"] = "Ingresá la cantidad o el detalle del aporte.";
-            return RedirectToAction("Index", "Donar", new { idOrganizacion, idPublicacion });
-        }
-
-        var usuario = BD.ObtenerUsuarioPorId(usuarioId.Value);
-        if (usuario == null)
-        {
-            return RedirectToAction("Login", "Cuenta");
-        }
-
-        BD.RegistrarDonacion(usuario.Id, idOrganizacion, tipoAporte, cantidad, mensaje ?? string.Empty);
 
         if (donarAnonimamente)
         {

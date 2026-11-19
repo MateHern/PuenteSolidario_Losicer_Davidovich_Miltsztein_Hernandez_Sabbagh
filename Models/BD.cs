@@ -698,7 +698,7 @@ namespace ProgramacionXEfsi_Puente.Models
                 ? cosasObj.ToString()
                 : string.Empty;
 
-            return new Publicacion
+            var publicacion = new Publicacion
             {
                 Id = row.Id,
                 IdOrganizacion = row.IdOrganizacion,
@@ -707,14 +707,78 @@ namespace ProgramacionXEfsi_Puente.Models
                 Descripcion = row.Descripcion ?? string.Empty,
                 Ubicacion = row.Ubicacion ?? string.Empty,
                 Necesidades = row.Necesidades ?? string.Empty,
+                CosasQueNecesitan = cosasQueNecesitan ?? string.Empty,
                 ImagenUrl = imagenUrl,
                 FechaAlta = row.FechaAlta is DateTime fecha ? fecha : DateTime.Now,
                 FechaLimite = fechaLimiteValue,
                 NombreOrganizacion = row.NombreOrganizacion ?? string.Empty,
                 TelefonoOrganizacion = row.TelefonoOrganizacion?.ToString() ?? string.Empty,
-                DireccionOrganizacion = row.DireccionOrganizacion ?? string.Empty,
-                BarrioOrganizacion = row.BarrioOrganizacion ?? string.Empty
+                DireccionOrganizacion = row.DireccionOrganizacion?.ToString() ?? string.Empty,
+                BarrioOrganizacion = row.BarrioOrganizacion?.ToString() ?? string.Empty
             };
+
+            try
+            {
+                publicacion.NecesidadesDetalle = ObtenerNecesidadesPublicacion(publicacion.Id);
+            }
+            catch
+            {
+                publicacion.NecesidadesDetalle = new List<NecesidadPublicacion>();
+            }
+
+            if (publicacion.NecesidadesDetalle.Count == 0 && !string.IsNullOrWhiteSpace(publicacion.Necesidades))
+            {
+                var categorias = publicacion.Necesidades
+                    .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                    .Distinct(StringComparer.OrdinalIgnoreCase)
+                    .ToList();
+
+                var cantidadesFallback = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+
+                using var fallbackConnection = CrearConexion();
+                foreach (var categoria in categorias)
+                {
+                    var necesidadId = fallbackConnection.QuerySingleOrDefault<int?>(
+                        "ObtenerNecesidadPorCategoria",
+                        new { Categoria = categoria },
+                        commandType: CommandType.StoredProcedure);
+
+                    if (!necesidadId.HasValue)
+                    {
+                        necesidadId = fallbackConnection.QuerySingleOrDefault<int?>(
+                            "RegistrarNecesidad",
+                            new { Categoria = categoria },
+                            commandType: CommandType.StoredProcedure);
+                    }
+
+                    if (necesidadId.HasValue)
+                    {
+                        cantidadesFallback[categoria] = 1;
+                        publicacion.NecesidadesDetalle.Add(new NecesidadPublicacion
+                        {
+                            IdNecesidad = necesidadId.Value,
+                            Categoria = categoria,
+                            CantidadSolicitada = 1,
+                            CantidadRecibida = 0
+                        });
+                    }
+                }
+
+                if (cantidadesFallback.Count > 0)
+                {
+                    try
+                    {
+                        RegistrarNecesidadesPublicacion(publicacion.Id, cantidadesFallback);
+                    }
+                    catch
+                    {
+                        // La vista conserva el respaldo para que las opciones sigan disponibles,
+                        // aunque la persistencia de cantidades no esté configurada en la base.
+                    }
+                }
+            }
+
+            return publicacion;
         }
 
         public static List<DonacionRecibida> ObtenerDonacionesRecibidasPorOrganizacion(int idOrganizacion)
@@ -777,6 +841,81 @@ namespace ProgramacionXEfsi_Puente.Models
                     RedSocial = redSocial
                 };
             }).ToList();
+        }
+
+        public static List<NecesidadPublicacion> ObtenerNecesidadesPublicacion(int idPublicacion)
+        {
+            using var connection = CrearConexion();
+            var rows = connection.Query<dynamic>(
+                "ObtenerNecesidadesPublicacion",
+                new { IdPublicacion = idPublicacion },
+                commandType: CommandType.StoredProcedure).ToList();
+
+            return rows.Select(row => new NecesidadPublicacion
+            {
+                IdNecesidad = Convert.ToInt32(row.IdNecesidad),
+                Categoria = row.Categoria?.ToString() ?? string.Empty,
+                CantidadSolicitada = Convert.ToInt32(row.CantidadSolicitada),
+                CantidadRecibida = Convert.ToInt32(row.CantidadRecibida)
+            }).ToList();
+        }
+
+        public static ResultadoDonacionPublicacion RegistrarDonacionPublicacion(int usuarioId, int idPublicacion, int idNecesidad, int cantidad, string mensaje)
+        {
+            using var connection = CrearConexion();
+            var resultado = connection.QueryFirstOrDefault<dynamic>(
+                "RegistrarDonacionPublicacion",
+                new
+                {
+                    IdUsuario = usuarioId,
+                    IdPublicacion = idPublicacion,
+                    IdNecesidad = idNecesidad,
+                    Cantidad = cantidad,
+                    Mensaje = mensaje ?? string.Empty
+                },
+                commandType: CommandType.StoredProcedure);
+
+            if (resultado == null)
+            {
+                return new ResultadoDonacionPublicacion { Resultado = -99, Mensaje = "No se pudo registrar la donación." };
+            }
+
+            var dict = (IDictionary<string, object>)resultado;
+            int LeerInt(params string[] nombres)
+            {
+                foreach (var nombre in nombres)
+                {
+                    if (dict.TryGetValue(nombre, out var valor) && valor != null)
+                        return Convert.ToInt32(valor);
+                }
+                return 0;
+            }
+
+            return new ResultadoDonacionPublicacion
+            {
+                Resultado = LeerInt("Resultado", "Codigo"),
+                Mensaje = dict.TryGetValue("Mensaje", out var mensajeResultado) ? mensajeResultado?.ToString() ?? string.Empty : string.Empty,
+                Porcentaje = LeerInt("Porcentaje")
+            };
+        }
+
+        public static void RegistrarNecesidadesPublicacion(int idPublicacion, IDictionary<string, int> cantidades)
+        {
+            if (idPublicacion <= 0 || cantidades == null || cantidades.Count == 0)
+            {
+                return;
+            }
+
+            var necesidadesJson = System.Text.Json.JsonSerializer.Serialize(
+                cantidades
+                    .Where(x => !string.IsNullOrWhiteSpace(x.Key) && x.Value > 0)
+                    .Select(x => new { categoria = x.Key, cantidad = x.Value }));
+
+            using var connection = CrearConexion();
+            connection.Execute(
+                "RegistrarNecesidadesPublicacion",
+                new { IdPublicacion = idPublicacion, NecesidadesJson = necesidadesJson },
+                commandType: CommandType.StoredProcedure);
         }
     }
 }

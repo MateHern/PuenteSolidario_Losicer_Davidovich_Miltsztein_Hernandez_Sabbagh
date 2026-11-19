@@ -81,10 +81,13 @@
                         <div class="grid gap-2 md:grid-cols-2">
                             @foreach (var necesidad in new[] { "Alimentos", "Ropa", "Calzado", "Útiles escolares", "Medicamentos", "Frazadas y abrigo", "Muebles", "Artículos de higiene", "Juguetes", "Pañales y artículos de bebé", "Dinero" })
                             {
-                                <label class="flex items-center gap-2 text-sm text-[#2F2A28]">
-                                    <input type="checkbox" name="necesidades" value="@necesidad" class="h-4 w-4 rounded border-[#D9D1CA] text-[#2F9D9D] focus:ring-[#CFEAEA]" />
-                                    <span>@necesidad</span>
-                                </label>
+                                <div class="rounded-xl border border-transparent p-2 transition focus-within:border-[#CFEAEA] focus-within:bg-[#F8FCFB]">
+                                    <label class="flex items-center gap-2 text-sm font-semibold text-[#2F2A28]">
+                                        <input type="checkbox" name="necesidades" value="@necesidad" class="necesidad-check h-4 w-4 rounded border-[#D9D1CA] text-[#2F9D9D] focus:ring-[#CFEAEA]" />
+                                        <span>@necesidad</span>
+                                    </label>
+                                    <input type="number" name="cantidades[@necesidad]" min="1" step="1" value="" placeholder="Cantidad necesaria" class="cantidad-necesidad mt-2 hidden w-full rounded-lg border border-[#D9D1CA] bg-white px-3 py-2 text-sm outline-none focus:border-[#62C2B9]" />
+                                </div>
                             }
                         </div>
                     </div>
@@ -152,3 +155,14 @@
         </div>
     }
 </div>
+
+<script>
+    document.querySelectorAll('.necesidad-check').forEach(function (checkbox) {
+        checkbox.addEventListener('change', function () {
+            var cantidad = checkbox.closest('div').querySelector('.cantidad-necesidad');
+            cantidad.classList.toggle('hidden', !checkbox.checked);
+            cantidad.required = checkbox.checked;
+            if (!checkbox.checked) cantidad.value = '';
+        });
+    });
+</script>

@@ -1,47 +1,77 @@
 @{
     ViewData["Title"] = "Crear Admin";
+    var adminNombre = Context.Session.GetString("UsuarioNombre") ?? "Administrador";
 }
 
-<div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-md-7">
-            <div class="card shadow-sm border-0 rounded-4">
-                <div class="card-body p-5">
-                    <h2 class="fw-bold mb-4">Crear nuevo administrador</h2>
-
-                    <form method="post">
-                        @Html.AntiForgeryToken()
-
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <label class="form-label">Nombre</label>
-                                <input type="text" name="nombre" class="form-control" required />
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Apellido</label>
-                                <input type="text" name="apellido" class="form-control" required />
-                            </div>
-                            <div class="col-md-12">
-                                <label class="form-label">Email</label>
-                                <input type="email" name="email" class="form-control" required />
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Contraseña</label>
-                                <input type="password" name="password" class="form-control" required />
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Confirmar contraseña</label>
-                                <input type="password" name="confirmPassword" class="form-control" required />
-                            </div>
-                        </div>
-
-                        <div class="d-flex justify-content-between mt-4">
-                            <a href="/Admin/AprobarOngs" class="btn btn-outline-dark">Volver</a>
-                            <button type="submit" class="btn btn-dark">Crear Admin</button>
-                        </div>
-                    </form>
-                </div>
+<div class="mx-auto grid max-w-7xl grid-cols-1 gap-8 py-6 md:py-8 lg:grid-cols-[280px_minmax(0,1fr)]">
+    <aside class="h-fit rounded-[32px] border border-[#EFE6DD] bg-[#F4EFE9] p-6 shadow-sm">
+        <div class="flex flex-col items-center text-center">
+            <div class="flex h-24 w-24 items-center justify-center rounded-full bg-[#3F322B] text-3xl font-black text-white shadow-inner">
+                @adminNombre.Trim()[0].ToString().ToUpperInvariant()
             </div>
+            <p class="mt-5 text-xs font-extrabold uppercase tracking-[0.2em] text-[#FF7341]">Administración</p>
+            <h2 class="mt-2 text-2xl font-black text-[#2F2A28]">@adminNombre</h2>
         </div>
-    </div>
+
+        <nav class="mt-8 space-y-3">
+            <a href="/Admin/AprobarOngs" class="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-bold text-[#534D49] transition hover:bg-white">
+                <span class="flex h-9 w-9 items-center justify-center rounded-full bg-white">✓</span>
+                Aprobar ONGs
+            </a>
+            <a href="/Admin/CrearAdmin" class="flex items-center gap-3 rounded-2xl bg-[#F8D7BA] px-4 py-3 text-sm font-black text-[#2F2A28] shadow-sm">
+                <span class="flex h-9 w-9 items-center justify-center rounded-full bg-white/70">+</span>
+                Crear administrador
+            </a>
+            <a href="/Cuenta/Logout" class="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-bold text-[#534D49] transition hover:bg-white">
+                <span class="flex h-9 w-9 items-center justify-center rounded-full bg-white">←</span>
+                Cerrar sesión
+            </a>
+        </nav>
+    </aside>
+
+    <main class="space-y-6">
+        <section class="overflow-hidden rounded-[32px] border border-[#EEE5DC] bg-white p-6 shadow-sm md:p-8">
+            <div class="max-w-3xl">
+                <p class="text-xs font-extrabold uppercase tracking-[0.22em] text-[#FF7341]">Nuevas cuentas</p>
+                <h1 class="mt-3 text-4xl font-black leading-tight text-[#2F2A28] md:text-5xl">Crear administrador</h1>
+                <p class="mt-3 text-base leading-7 text-[#5B4E46]">Agregá una nueva persona al equipo de administración de Puente Solidario.</p>
+            </div>
+        </section>
+
+        <section class="rounded-[32px] border border-[#EEE5DC] bg-white p-6 shadow-sm md:p-8">
+            <div asp-validation-summary="ModelOnly" class="mb-5 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"></div>
+
+            <form method="post" class="space-y-6">
+                @Html.AntiForgeryToken()
+
+                <div class="grid gap-5 md:grid-cols-2">
+                    <div>
+                        <label class="mb-2 block text-sm font-black text-[#3F322B]">Nombre</label>
+                        <input type="text" name="nombre" class="w-full rounded-2xl border border-[#DED4CA] bg-[#FFFEFC] px-4 py-3.5 text-sm text-[#2F2A28] outline-none transition placeholder:text-[#A99D94] focus:border-[#62C2B9] focus:ring-4 focus:ring-[#62C2B9]/10" required />
+                    </div>
+                    <div>
+                        <label class="mb-2 block text-sm font-black text-[#3F322B]">Apellido</label>
+                        <input type="text" name="apellido" class="w-full rounded-2xl border border-[#DED4CA] bg-[#FFFEFC] px-4 py-3.5 text-sm text-[#2F2A28] outline-none transition placeholder:text-[#A99D94] focus:border-[#62C2B9] focus:ring-4 focus:ring-[#62C2B9]/10" required />
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="mb-2 block text-sm font-black text-[#3F322B]">Email</label>
+                        <input type="email" name="email" class="w-full rounded-2xl border border-[#DED4CA] bg-[#FFFEFC] px-4 py-3.5 text-sm text-[#2F2A28] outline-none transition placeholder:text-[#A99D94] focus:border-[#62C2B9] focus:ring-4 focus:ring-[#62C2B9]/10" placeholder="nombre@puentesolidario.org" required />
+                    </div>
+                    <div>
+                        <label class="mb-2 block text-sm font-black text-[#3F322B]">Contraseña</label>
+                        <input type="password" name="password" class="w-full rounded-2xl border border-[#DED4CA] bg-[#FFFEFC] px-4 py-3.5 text-sm text-[#2F2A28] outline-none transition focus:border-[#62C2B9] focus:ring-4 focus:ring-[#62C2B9]/10" required />
+                    </div>
+                    <div>
+                        <label class="mb-2 block text-sm font-black text-[#3F322B]">Confirmar contraseña</label>
+                        <input type="password" name="confirmPassword" class="w-full rounded-2xl border border-[#DED4CA] bg-[#FFFEFC] px-4 py-3.5 text-sm text-[#2F2A28] outline-none transition focus:border-[#62C2B9] focus:ring-4 focus:ring-[#62C2B9]/10" required />
+                    </div>
+                </div>
+
+                <div class="flex flex-col-reverse gap-3 border-t border-[#EEE6DE] pt-6 sm:flex-row sm:items-center sm:justify-between">
+                    <a href="/Admin/AprobarOngs" class="inline-flex items-center justify-center rounded-full border border-[#D9D1CA] bg-white px-6 py-3 text-sm font-black text-[#3F322B] transition hover:bg-[#F8F5F2]">Volver</a>
+                    <button type="submit" class="inline-flex items-center justify-center rounded-full bg-[#FF7341] px-6 py-3 text-sm font-black text-white shadow-sm transition hover:bg-[#EA6235]">Crear administrador</button>
+                </div>
+            </form>
+        </section>
+    </main>
 </div>

@@ -32,7 +32,7 @@ namespace ProgramacionXEfsi_Puente.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [RequireRole("Ong")]
-        public IActionResult CrearPublicacion(string nombreDelPedido, string tipoDePropuesta, string descripcion, string[] necesidades, string? cosasQueNecesitan, DateTime? fechaLimite, IFormFile? imagen)
+        public IActionResult CrearPublicacion(string nombreDelPedido, string tipoDePropuesta, string descripcion, string[] necesidades, Dictionary<string, int>? cantidades, string? cosasQueNecesitan, DateTime? fechaLimite, IFormFile? imagen)
         {
             var ongId = HttpContext.Session.GetInt32("OngId");
 
@@ -83,11 +83,34 @@ namespace ProgramacionXEfsi_Puente.Controllers
                 ? string.Join(", ", necesidades.Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => x.Trim()))
                 : string.Empty;
 
+            var necesidadesCantidad = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+            if (necesidades != null)
+            {
+                foreach (var necesidad in necesidades.Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => x.Trim()).Distinct(StringComparer.OrdinalIgnoreCase))
+                {
+                    if (cantidades != null && cantidades.TryGetValue(necesidad, out var cantidad) && cantidad > 0)
+                    {
+                        necesidadesCantidad[necesidad] = cantidad;
+                    }
+                }
+            }
+
+            if (necesidades != null && necesidades.Length > 0 && necesidadesCantidad.Count == 0)
+            {
+                TempData["ErrorPublicacion"] = "Indicá una cantidad mayor a cero para cada necesidad seleccionada.";
+                return RedirectToAction("Dashboard");
+            }
+
             try
             {
                 var publicacionId = BD.RegistrarPublicacion(ongId.Value, nombreDelPedido.Trim(), tipoDePropuesta.Trim(), descripcion.Trim(), necesidadesTexto, cosasQueNecesitan?.Trim() ?? string.Empty, fechaLimite, imagenUrl);
                 if (publicacionId > 0)
                 {
+                    if (cantidades != null)
+                    {
+                        BD.RegistrarNecesidadesPublicacion(publicacionId, necesidadesCantidad);
+                    }
+
                     TempData["OkPublicacion"] = "Publicación creada correctamente.";
                     return RedirectToAction("Index", "Catalogo");
                 }
