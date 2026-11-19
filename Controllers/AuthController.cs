@@ -19,7 +19,7 @@ public class AuthController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult RegistroPersonal(string nombre, string apellido, string correo, string password, string confirmPassword)
+    public IActionResult RegistroPersonal(string nombre, string apellido, string correo, string telefono, string redSocial, string password, string confirmPassword)
     {
         if (string.IsNullOrWhiteSpace(nombre) || string.IsNullOrWhiteSpace(apellido) || string.IsNullOrWhiteSpace(correo) || string.IsNullOrWhiteSpace(password))
         {
@@ -39,7 +39,7 @@ public class AuthController : Controller
             return View();
         }
 
-        BD.RegistrarUsuario(nombre.Trim(), apellido.Trim(), correo.Trim(), password);
+        BD.RegistrarUsuario(nombre.Trim(), apellido.Trim(), correo.Trim(), password, telefono?.Trim() ?? string.Empty, redSocial?.Trim() ?? string.Empty);
         TempData["RegistroExito"] = "Cuenta personal creada correctamente.";
         return RedirectToAction("Login", "Cuenta");
     }
@@ -52,7 +52,7 @@ public class AuthController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult RegistroOrg(string nombrePublico, string correoInstitucional, string password, string confirmPassword, string telefono, string descripcion)
+    public IActionResult RegistroOrg(string nombrePublico, string correoInstitucional, string password, string confirmPassword, string telefono, string descripcion, string ubicacionCalle, string ubicacionNumero, string ubicacionLocalidad, string[] necesidades)
     {
         if (string.IsNullOrWhiteSpace(nombrePublico) || string.IsNullOrWhiteSpace(correoInstitucional) || string.IsNullOrWhiteSpace(password))
         {
@@ -72,7 +72,17 @@ public class AuthController : Controller
             return View();
         }
 
-        BD.RegistrarOrganizacion(nombrePublico.Trim(), correoInstitucional.Trim(), password, telefono ?? string.Empty, descripcion ?? string.Empty);
+        var idOrganizacion = BD.RegistrarOrganizacion(
+            nombrePublico.Trim(),
+            correoInstitucional.Trim(),
+            password,
+            telefono ?? string.Empty,
+            descripcion ?? string.Empty,
+            ubicacionCalle ?? string.Empty,
+            ubicacionNumero ?? string.Empty,
+            ubicacionLocalidad ?? string.Empty);
+
+        BD.RegistrarNecesidadesOrganizacion(idOrganizacion, necesidades);
 
         TempData["RegistroExito"] = "Tu solicitud de ONG fue enviada y queda pendiente de aprobación por un administrador.";
         return RedirectToAction("Login", "Cuenta");

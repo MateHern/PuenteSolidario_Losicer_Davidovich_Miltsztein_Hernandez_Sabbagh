@@ -1,5 +1,3 @@
-using System.Data.SqlClient;
-using Dapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProgramacionXEfsi_Puente.Models;
@@ -8,8 +6,6 @@ namespace ProgramacionXEfsi_Puente.Controllers
 {
     public class CuentaController : Controller
     {
-        private const string ConnectionString = @"Server=(local);Database=Puente Solidario;Trusted_Connection=True;TrustServerCertificate=True;";
-
         private static string NormalizarRol(string? rol)
         {
             return (rol ?? string.Empty).Trim();
@@ -47,22 +43,6 @@ namespace ProgramacionXEfsi_Puente.Controllers
                 || string.Equals(normalized, "Admin", StringComparison.OrdinalIgnoreCase);
         }
 
-        private class UsuarioLoginRow
-        {
-            public int Id { get; set; }
-            public string Nombre { get; set; } = string.Empty;
-            public string Clave { get; set; } = string.Empty;
-            public string Rol { get; set; } = string.Empty;
-        }
-
-        private class OngLoginRow
-        {
-            public int Id { get; set; }
-            public string Nombre { get; set; } = string.Empty;
-            public string Clave { get; set; } = string.Empty;
-            public bool EsAprobado { get; set; }
-        }
-
         [HttpGet]
         public IActionResult Login()
         {
@@ -73,26 +53,22 @@ namespace ProgramacionXEfsi_Puente.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginInput model)
+        public IActionResult Login(LoginInput model)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            var email = model.Email.Trim();
-
-            if (string.Equals(model.TipoCuenta, "Usuario", StringComparison.OrdinalIgnoreCase))
+            try
             {
-                using var connection = new SqlConnection(ConnectionString);
-                var usuario = await connection.QueryFirstOrDefaultAsync<UsuarioLoginRow>(
-                    "SELECT TOP 1 Id, Nombre, Contraseña AS Clave, Rol FROM Usuarios WHERE Mail = @Email",
-                    new { Email = email });
+                var email = model.Email.Trim();
 
-                if (usuario != null)
+                if (string.Equals(model.TipoCuenta, "Usuario", StringComparison.OrdinalIgnoreCase))
                 {
-                    var storedPassword = usuario.Clave ?? string.Empty;
-                    if (!string.IsNullOrWhiteSpace(storedPassword) && string.Equals(model.Password, storedPassword, StringComparison.Ordinal))
+                    var usuario = BD.ValidarLoginUsuario(email, model.Password);
+
+                    if (usuario != null)
                     {
                         var rolDb = NormalizarRol(usuario.Rol);
                         var rolSesion = CanonicalizarRol(rolDb);
@@ -115,43 +91,29 @@ namespace ProgramacionXEfsi_Puente.Controllers
                         return RedirectToAction("Index", "Home");
                     }
                 }
-            }
-            else if (string.Equals(model.TipoCuenta, "Ong", StringComparison.OrdinalIgnoreCase))
-            {
-                using var connection = new SqlConnection(ConnectionString);
-                var ong = await connection.QueryFirstOrDefaultAsync<OngLoginRow>(
-                    "SELECT TOP 1 Id, Nombre, Contraseña AS Clave, Valida AS EsAprobado FROM Organizaciones WHERE Mail = @Email",
-                    new { Email = email });
-
-                if (ong != null)
+                else if (string.Equals(model.TipoCuenta, "Ong", StringComparison.OrdinalIgnoreCase))
                 {
-                    if (ong.EsAprobado == false)
-                    {
-                        ModelState.AddModelError(string.Empty, "Su cuenta de ONG está pendiente de aprobación por un administrador.");
-                        return View(model);
-                    }
+                    var ong = BD.ValidarLoginOrganizacion(email, model.Password);
 
-                    var storedPassword = ong.Clave ?? string.Empty;
-                    if (!string.IsNullOrWhiteSpace(storedPassword) && string.Equals(model.Password, storedPassword, StringComparison.Ordinal))
+                    if (ong != null)
                     {
+                        if (ong.EsAprobado == false)
+                        {
+                            ModelState.AddModelError(string.Empty, "Su cuenta de ONG está pendiente de aprobación por un administrador.");
+                            return View(model);
+                        }
+
                         HttpContext.Session.SetInt32("OngId", ong.Id);
                         HttpContext.Session.SetString("Rol", "Ong");
                         HttpContext.Session.SetString("OngNombre", ong.Nombre ?? "ONG");
                         return RedirectToAction("Index", "Home");
                     }
                 }
-            }
-            else if (string.Equals(model.TipoCuenta, "Admin", StringComparison.OrdinalIgnoreCase))
-            {
-                using var connection = new SqlConnection(ConnectionString);
-                var usuario = await connection.QueryFirstOrDefaultAsync<UsuarioLoginRow>(
-                    "SELECT TOP 1 Id, Nombre, Contraseña AS Clave, Rol FROM Usuarios WHERE Mail = @Email",
-                    new { Email = email });
-
-                if (usuario != null)
+                else if (string.Equals(model.TipoCuenta, "Admin", StringComparison.OrdinalIgnoreCase))
                 {
-                    var storedPassword = usuario.Clave ?? string.Empty;
-                    if (!string.IsNullOrWhiteSpace(storedPassword) && string.Equals(model.Password, storedPassword, StringComparison.Ordinal))
+                    var usuario = BD.ValidarLoginUsuario(email, model.Password);
+
+                    if (usuario != null)
                     {
                         var rolDb = NormalizarRol(usuario.Rol);
                         var rolSesion = CanonicalizarRol(rolDb);
@@ -168,6 +130,12 @@ namespace ProgramacionXEfsi_Puente.Controllers
                         return RedirectToAction("AprobarOngs", "Admin");
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                ModelState.AddModelError(string.Empty, "Email, contraseña o tipo de cuenta incorrectos.");
+                return View(model);
             }
 
             ModelState.AddModelError(string.Empty, "Email, contraseña o tipo de cuenta incorrectos.");

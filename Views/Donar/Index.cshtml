@@ -3,6 +3,17 @@
     var nombre = ViewBag.UsuarioNombre as string ?? "Usuario";
     var apellido = ViewBag.UsuarioApellido as string ?? string.Empty;
     var email = ViewBag.UsuarioEmail as string ?? string.Empty;
+    var organizaciones = ViewBag.Organizaciones as List<ProgramacionXEfsi_Puente.Models.Organizacion> ?? new List<ProgramacionXEfsi_Puente.Models.Organizacion>();
+    var organizacionSeleccionada = ViewBag.OrganizacionSeleccionada as ProgramacionXEfsi_Puente.Models.Organizacion;
+    var publicacion = ViewBag.Publicacion as ProgramacionXEfsi_Puente.Models.Publicacion;
+    var idOrganizacion = (int)(ViewBag.OrganizacionId ?? 0);
+    var idPublicacion = (int)(ViewBag.IdPublicacion ?? 0);
+
+    var tipoAportePredeterminado = publicacion == null
+        ? "Donación"
+        : (publicacion.Necesidades.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).FirstOrDefault()
+           ?? publicacion.TipoPropuesta
+           ?? "Donación");
 }
 
 <div class="grid grid-cols-1 gap-12 py-12 md:grid-cols-2">
@@ -15,22 +26,40 @@
         <p class="max-w-lg text-lg text-[#4A403B]">Completá el formulario y la organización se pondrá en contacto.</p>
 
         <div class="rounded-2xl bg-[#F2F0EE] p-6 shadow-sm ring-1 ring-[#E8E1DB]">
-            <h2 class="text-2xl font-bold text-[#2F2A28]">Alimentos para todos</h2>
-            <p class="mt-3 text-base leading-7 text-[#4A403B]">
-                Recolección de alimentos no perecederos para familias con ingresos reducidos y centros comunitarios.
-            </p>
+            @if (publicacion != null)
+            {
+                <p class="text-xs font-black uppercase tracking-[0.18em] text-[#6F625D]">Publicación seleccionada</p>
+                <h2 class="mt-2 text-2xl font-bold text-[#2F2A28]">@publicacion.Titulo</h2>
+                <p class="mt-1 font-semibold text-[#496C69]">@publicacion.NombreOrganizacion</p>
+                <p class="mt-3 text-base leading-7 text-[#4A403B]">@publicacion.Descripcion</p>
 
-            <ul class="mt-5 space-y-2 text-base text-[#3E3631]">
-                <li class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-[#D98C48]"></span> Alimentos no perecederos</li>
-                <li class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-[#D98C48]"></span> Útiles escolares</li>
-            </ul>
+                @if (!string.IsNullOrWhiteSpace(publicacion.Necesidades))
+                {
+                    <p class="mt-5 text-sm font-bold uppercase tracking-[0.18em] text-[#6F625D]">Necesidades</p>
+                    <p class="mt-2 text-base text-[#3E3631]">@publicacion.Necesidades</p>
+                }
+
+                @if (!string.IsNullOrWhiteSpace(publicacion.CosasQueNecesitan))
+                {
+                    <p class="mt-5 text-sm font-bold uppercase tracking-[0.18em] text-[#6F625D]">Cosas que necesita</p>
+                    <p class="mt-2 whitespace-pre-line text-base text-[#3E3631]">@publicacion.CosasQueNecesitan</p>
+                }
+            }
+            else
+            {
+                <h2 class="text-2xl font-bold text-[#2F2A28]">@((organizacionSeleccionada?.Nombre) ?? "Organización")</h2>
+            }
 
             <div class="mt-6">
                 <p class="text-sm font-bold uppercase tracking-[0.18em] text-[#6F625D]">Ubicación</p>
-                <p class="mt-2 text-base text-[#2F2A28]">Morón / Provincia de Buenos Aires</p>
-                <a href="/Mapa" class="mt-2 inline-block text-sm font-semibold text-[#2F2A28] underline underline-offset-4 hover:text-[#7A6050]">
-                    Ver en el mapa
-                </a>
+                <p class="mt-2 text-base text-[#2F2A28]">@(publicacion?.Ubicacion ?? organizacionSeleccionada?.Direccion ?? "Sin ubicación")</p>
+                @if (publicacion != null && (!string.IsNullOrWhiteSpace(publicacion.DireccionOrganizacion) || !string.IsNullOrWhiteSpace(publicacion.BarrioOrganizacion)))
+                {
+                    <p class="mt-1 text-sm text-[#4A403B]">
+                        @publicacion.DireccionOrganizacion @publicacion.BarrioOrganizacion
+                    </p>
+                }
+                <a href="/Mapa" class="mt-2 inline-block text-sm font-semibold text-[#2F2A28] underline underline-offset-4 hover:text-[#7A6050]">Ver en el mapa</a>
             </div>
         </div>
     </div>
@@ -45,13 +74,24 @@
             </div>
         }
 
+        @if (TempData["DonacionError"] != null)
+        {
+            <div class="mt-4 rounded-xl border border-red-200 bg-red-50 p-3 text-sm font-semibold text-red-700">
+                @TempData["DonacionError"]
+            </div>
+        }
+
         <form asp-action="Submit" asp-controller="Donar" method="post" class="mt-6 space-y-5">
             @Html.AntiForgeryToken()
+
+            <input type="hidden" name="idOrganizacion" value="@idOrganizacion" />
+            <input type="hidden" name="idPublicacion" value="@idPublicacion" />
 
             <div class="grid gap-5 md:grid-cols-2">
                 <div>
                     <label for="tipoAporte" class="mb-2 block text-xs font-bold tracking-[0.18em] text-[#4A403B]">TIPO DE APORTE</label>
                     <select id="tipoAporte" name="tipoAporte" class="w-full rounded-xl border border-[#D9D1CA] bg-[#F9F7F5] px-4 py-3 text-sm text-[#2F2A28] outline-none transition focus:border-[#2F9D9D] focus:ring-2 focus:ring-[#CFEAEA]">
+                        <option value="@tipoAportePredeterminado" selected>@tipoAportePredeterminado</option>
                         <option value="Donación">Donación</option>
                         <option value="Dinero">Dinero</option>
                         <option value="Ropa">Ropa</option>

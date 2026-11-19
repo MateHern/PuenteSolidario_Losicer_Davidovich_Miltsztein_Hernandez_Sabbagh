@@ -1,7 +1,6 @@
-@model List<ProgramacionXEfsi_Puente.Models.Organizacion>
+@model List<ProgramacionXEfsi_Puente.Models.Publicacion>
 @{
     ViewData["Title"] = "Catálogo";
-    var isLoggedIn = !string.IsNullOrWhiteSpace(Context.Session.GetString("Rol"));
     var categorias = ViewBag.Categorias as List<string> ?? new List<string>();
     var provincias = ViewBag.Provincias as List<string> ?? new List<string>();
     var categoriaSeleccionada = ViewBag.CategoriaSeleccionada as string ?? string.Empty;
@@ -9,41 +8,22 @@
 }
 
 <div class="catalog-page app-shell">
-    <header class="catalog-header">
-        <div class="flex items-center justify-between gap-3">
-            <div class="flex items-center gap-3">
-                <div class="site-brand-mark">P</div>
-                <div class="site-brand">Puente Solidario</div>
-            </div>
-
-            <div class="hidden items-center gap-8 md:flex">
-                <a href="/" class="text-lg font-medium text-[#3F322B]">Inicio</a>
-                <a href="/Catalogo" class="text-lg font-medium text-[#3F322B] underline decoration-[#62C2B9] decoration-2 underline-offset-8">Catálogo</a>
-                <a href="/Usuario/Perfil" class="text-lg font-medium text-[#3F322B]">Perfil</a>
-            </div>
-
-            <div class="flex items-center gap-3">
-                @if (!isLoggedIn)
-                {
-                    <a href="/Cuenta/Login" class="rounded-full bg-[#F2E2D3] px-4 py-2 text-sm font-semibold text-[#3F322B]">Ingresar / Crear cuenta</a>
-                }
-                else
-                {
-                    <a href="/Cuenta/Logout" class="rounded-full bg-[#F2E2D3] px-4 py-2 text-sm font-semibold text-[#3F322B]">Cerrar sesión</a>
-                }
-            </div>
+    @if (TempData["OkPublicacion"] != null)
+    {
+        <div class="mx-4 mt-4 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-700 md:mx-6">
+            @TempData["OkPublicacion"]
         </div>
-    </header>
+    }
 
     <section class="catalog-hero px-4 md:px-6">
-        <div class="catalog-title">Encontra una organización que te necesite</div>
-        <p class="catalog-subtitle">Filtrá por tipo de ayuda, ubicación o grupo de personas</p>
+        <div class="catalog-title">Encontrá publicaciones de organizaciones</div>
+        <p class="catalog-subtitle">Filtrá por tipo de ayuda, ubicación o lo que estés buscando</p>
 
         <form method="get" asp-controller="Catalogo" asp-action="Index" class="catalog-filters">
             <input type="text" name="busqueda" value="@ViewBag.Busqueda" placeholder="Buscar una causa..." class="filter-field" />
 
             <select name="categoria" class="filter-field">
-                <option value="">Todos las categorías</option>
+                <option value="">Todas las categorías</option>
                 @foreach (var categoria in categorias)
                 {
                     <option value="@categoria" selected="@(categoria == categoriaSeleccionada ? "selected" : null)">@categoria</option>
@@ -65,9 +45,9 @@
     <section class="catalog-grid px-4 md:px-6">
         @if (Model != null && Model.Any())
         {
-            @foreach (var organizacion in Model)
+            @foreach (var publicacion in Model)
             {
-                var tone = (organizacion.Nombre?.Length ?? 0) % 6;
+                var tone = (publicacion.Titulo?.Length ?? 0) % 6;
                 var variant = tone switch
                 {
                     0 => "catalog-card--orange",
@@ -80,31 +60,29 @@
 
                 <article class="catalog-card @variant">
                     <div class="catalog-card-image">
-                        <span class="catalog-card-tag">@((organizacion.Nombre?.Contains("volunt") == true ? "Voluntariado" : (organizacion.Nombre?.Contains("salud") == true ? "Salud" : "Donaciones")))</span>
+                        @if (!string.IsNullOrWhiteSpace(publicacion.ImagenUrl))
+                        {
+                            <img src="@publicacion.ImagenUrl" alt="@publicacion.Titulo" class="h-full w-full object-cover" />
+                        }
+                        <span class="catalog-card-tag">@(!string.IsNullOrWhiteSpace(publicacion.TipoPropuesta) ? publicacion.TipoPropuesta : "Publicación")</span>
                     </div>
                     <div class="catalog-card-body">
-                        <h3>@organizacion.Nombre</h3>
-                        <p>@organizacion.Direccion</p>
-                        <a href="/Cuenta/Login" class="catalog-link">Conocer más →</a>
+                        <h3>@publicacion.Titulo</h3>
+                        <p class="mb-2 text-sm font-semibold text-[#4A403B]">@publicacion.NombreOrganizacion</p>
+                        <p>@publicacion.Ubicacion</p>
+                        <p class="mt-2 text-sm text-[#5B4E46]">@publicacion.Descripcion</p>
+                        @if (publicacion.FechaLimite.HasValue)
+                        {
+                            <p class="mt-2 text-xs font-semibold uppercase tracking-[0.14em] text-[#5F6B6A]">Fecha límite: @publicacion.FechaLimite.Value.ToString("dd/MM/yyyy")</p>
+                        }
+                        <a href="/Catalogo/Detalle/@publicacion.Id" class="catalog-link">Conocer más →</a>
                     </div>
                 </article>
             }
         }
         else
         {
-            <div class="rounded-xl border border-yellow-200 bg-yellow-50 px-4 py-3 text-yellow-700">No hay organizaciones que coincidan con ese filtro.</div>
+            <div class="rounded-xl border border-yellow-200 bg-yellow-50 px-4 py-3 text-yellow-700">Todavía no hay publicaciones creadas.</div>
         }
     </section>
 </div>
-
-<footer class="site-footer">
-    <div class="site-footer-inner">
-        <div class="site-footer-brand">Puente Solidario · Ayudar nos conecta</div>
-        <div class="site-footer-links">
-            <a href="#">Contacto</a>
-            <a href="#">Instagram</a>
-            <a href="#">Privacidad</a>
-            <span>© 2026</span>
-        </div>
-    </div>
-</footer>

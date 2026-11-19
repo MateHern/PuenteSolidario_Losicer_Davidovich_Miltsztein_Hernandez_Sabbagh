@@ -1,0 +1,116 @@
+@model ProgramacionXEfsi_Puente.Models.Organizacion
+@{
+    ViewData["Title"] = "Perfil ONG";
+    var nombre = string.IsNullOrWhiteSpace(Model?.Nombre) ? "ONG" : Model.Nombre;
+    var email = string.IsNullOrWhiteSpace(Model?.Email) ? "ong@ejemplo.com" : Model.Email;
+    var donaciones = ViewBag.DonacionesRecibidas as List<ProgramacionXEfsi_Puente.Models.DonacionRecibida>
+        ?? new List<ProgramacionXEfsi_Puente.Models.DonacionRecibida>();
+}
+
+<div class="min-h-screen bg-[#f9f7f4] px-4 py-8 md:px-8 xl:px-10">
+    <div class="mx-auto grid max-w-7xl grid-cols-1 gap-8 lg:grid-cols-[300px_minmax(0,1fr)]">
+        <aside class="rounded-[32px] bg-[#f4efe9] p-6 shadow-sm ring-1 ring-[#efe7df]">
+            <div class="flex flex-col items-center">
+                <div class="mb-5 flex h-28 w-28 items-center justify-center rounded-full bg-[#1d1d1c] text-3xl font-bold text-white shadow-inner">
+                    @((!string.IsNullOrWhiteSpace(nombre) ? nombre[0].ToString() : "O").ToUpperInvariant())
+                </div>
+                <h2 class="text-2xl font-bold text-[#1f1f1f]">@nombre</h2>
+                <p class="mt-1 text-sm text-[#6f6b68]">Organización</p>
+                <p class="mt-1 text-sm text-[#6f6b68]">@email</p>
+            </div>
+
+            <nav class="mt-8 space-y-3">
+                <a href="/Ong/Perfil" class="flex items-center gap-3 rounded-2xl bg-[#f8d7ba] px-4 py-3 text-sm font-semibold text-[#2c2a28] shadow-sm">Mi Perfil</a>
+                <a href="/Ong/Dashboard" class="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium text-[#534d49] transition hover:bg-[#f7f2ee]">Panel ONG y publicaciones</a>
+                <form asp-controller="Cuenta" asp-action="Logout" method="post" class="w-full">
+                    <button type="submit" class="w-full rounded-2xl px-4 py-3 text-left text-sm font-medium text-[#534d49] transition hover:bg-[#f7f2ee]">Cerrar Sesión</button>
+                </form>
+            </nav>
+        </aside>
+
+        <main class="space-y-8">
+            <section class="rounded-[32px] bg-white p-6 shadow-sm ring-1 ring-[#f0e9e2] md:p-7">
+                <p class="text-sm font-semibold uppercase tracking-[0.2em] text-[#8d7d72]">Perfil de ONG</p>
+                <h1 class="mt-2 text-3xl font-black text-[#1f1f1f] md:text-4xl">Hola @nombre</h1>
+                <p class="mt-3 max-w-2xl text-base leading-7 text-[#544c47]">Gracias por trabajar junto a la comunidad para brindar apoyo a quienes lo necesitan.</p>
+            </section>
+
+            <section class="grid gap-5 md:grid-cols-3">
+                <div class="rounded-[28px] bg-[#fffaf5] p-5 ring-1 ring-[#f5e3d2]">
+                    <div class="text-4xl font-black text-[#1f1f1f]">@donaciones.Count</div>
+                    <p class="mt-2 text-sm text-[#5d5651]">Donaciones recibidas</p>
+                </div>
+                <div class="rounded-[28px] bg-[#eef8ff] p-5 ring-1 ring-[#dfeef9]">
+                    <div class="text-4xl font-black text-[#1f1f1f]">@donaciones.Select(d => d.NombreUsuario).Distinct(StringComparer.OrdinalIgnoreCase).Count()</div>
+                    <p class="mt-2 text-sm text-[#5d5651]">Personas colaboradoras</p>
+                </div>
+                <div class="rounded-[28px] bg-[#edf8f6] p-5 ring-1 ring-[#d7ece8]">
+                    <div class="text-4xl font-black text-[#1f1f1f]">@donaciones.Select(d => d.Categoria).Where(c => !string.IsNullOrWhiteSpace(c)).Distinct(StringComparer.OrdinalIgnoreCase).Count()</div>
+                    <p class="mt-2 text-sm text-[#5d5651]">Tipos de ayuda recibida</p>
+                </div>
+            </section>
+
+            <section class="rounded-[32px] bg-white p-6 shadow-sm ring-1 ring-[#f0e9e2] md:p-7">
+                <h2 class="text-2xl font-bold text-[#1f1f1f]">Datos de la organización</h2>
+                <div class="mt-6 grid gap-4 md:grid-cols-2">
+                    <div class="rounded-2xl bg-[#faf7f4] p-4 ring-1 ring-[#f0e8e2]"><p class="text-xs font-semibold uppercase tracking-[0.18em] text-[#8d7d72]">Nombre</p><p class="mt-2 text-lg font-bold text-[#1f1f1f]">@nombre</p></div>
+                    <div class="rounded-2xl bg-[#faf7f4] p-4 ring-1 ring-[#f0e8e2]"><p class="text-xs font-semibold uppercase tracking-[0.18em] text-[#8d7d72]">Teléfono</p><p class="mt-2 text-lg font-bold text-[#1f1f1f]">@(string.IsNullOrWhiteSpace(Model.Telefono) ? "No informado" : Model.Telefono)</p></div>
+                    <div class="rounded-2xl bg-[#faf7f4] p-4 ring-1 ring-[#f0e8e2]"><p class="text-xs font-semibold uppercase tracking-[0.18em] text-[#8d7d72]">Email</p><p class="mt-2 text-lg font-bold text-[#1f1f1f]">@email</p></div>
+                    <div class="rounded-2xl bg-[#faf7f4] p-4 ring-1 ring-[#f0e8e2]"><p class="text-xs font-semibold uppercase tracking-[0.18em] text-[#8d7d72]">Ubicación</p><p class="mt-2 text-lg font-bold text-[#1f1f1f]">@($"{Model.Direccion} {Model.Barrio}".Trim())</p></div>
+                </div>
+            </section>
+
+            <section class="rounded-[32px] bg-white p-6 shadow-sm ring-1 ring-[#f0e9e2] md:p-7">
+                <h2 class="text-2xl font-bold text-[#1f1f1f]">Donaciones recibidas</h2>
+                @if (donaciones.Count == 0)
+                {
+                    <p class="mt-5 rounded-2xl bg-[#faf7f4] p-5 text-[#5d5651]">Todavía no recibieron donaciones.</p>
+                }
+                else
+                {
+                    <div class="mt-6 space-y-3">
+                        @foreach (var donacion in donaciones)
+                        {
+                            <div class="flex flex-col gap-2 rounded-2xl bg-[#faf7f4] p-4 ring-1 ring-[#f0e8e2] md:flex-row md:items-center md:justify-between">
+                                <div>
+                                    <p class="font-bold text-[#1f1f1f]">@(string.IsNullOrWhiteSpace(donacion.NombreDonante) ? donacion.NombreUsuario : donacion.NombreDonante)</p>
+                                    <p class="mt-1 text-sm text-[#5d5651]">@donacion.Categoria</p>
+                                </div>
+
+                                <div class="flex flex-wrap items-center gap-3">
+                                    <p class="text-sm font-semibold text-[#8d7d72]">@donacion.Fecha.ToString("dd/MM/yyyy")</p>
+                                    <details class="relative">
+                                        <summary class="cursor-pointer list-none rounded-full bg-[#2F9D9D] px-4 py-2 text-sm font-bold text-white transition hover:bg-[#248686]">
+                                            Contactar
+                                        </summary>
+                                        <div class="absolute right-0 z-20 mt-2 w-72 rounded-2xl border border-[#E9E3DD] bg-white p-4 shadow-lg">
+                                            <p class="text-xs font-bold uppercase tracking-[0.16em] text-[#8d7d72]">Datos de contacto</p>
+                                            <div class="mt-3 space-y-2 text-sm text-[#3F322B]">
+                                                @if (!string.IsNullOrWhiteSpace(donacion.Telefono))
+                                                {
+                                                    <p><strong>Teléfono:</strong> <a class="text-[#2F9D9D] underline" href="tel:@donacion.Telefono">@donacion.Telefono</a></p>
+                                                }
+                                                @if (!string.IsNullOrWhiteSpace(donacion.Email))
+                                                {
+                                                    <p><strong>Correo:</strong> <a class="break-all text-[#2F9D9D] underline" href="mailto:@donacion.Email">@donacion.Email</a></p>
+                                                }
+                                                @if (!string.IsNullOrWhiteSpace(donacion.RedSocial))
+                                                {
+                                                    <p><strong>Red social:</strong> @donacion.RedSocial</p>
+                                                }
+                                                @if (string.IsNullOrWhiteSpace(donacion.Telefono) && string.IsNullOrWhiteSpace(donacion.Email) && string.IsNullOrWhiteSpace(donacion.RedSocial))
+                                                {
+                                                    <p class="text-[#6f6b68]">El donante no informó datos de contacto.</p>
+                                                }
+                                            </div>
+                                        </div>
+                                    </details>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+            </section>
+        </main>
+    </div>
+</div>

@@ -6,7 +6,7 @@ namespace ProgramacionXEfsi_Puente.Controllers;
 public class DonarController : Controller
 {
     [RequireRole("Usuario")]
-    public IActionResult Index()
+    public IActionResult Index(int? idOrganizacion, int? idPublicacion)
     {
         var usuarioId = HttpContext.Session.GetInt32("UsuarioId");
         if (!usuarioId.HasValue)
@@ -20,10 +20,38 @@ public class DonarController : Controller
             return RedirectToAction("Login", "Cuenta");
         }
 
+        Publicacion? publicacion = null;
+        Organizacion? organizacionSeleccionada = null;
+
+        if (idPublicacion.HasValue)
+        {
+            publicacion = BD.ObtenerPublicacionPorId(idPublicacion.Value);
+            if (publicacion != null)
+            {
+                organizacionSeleccionada = BD.ObtenerOrganizacionPorId(publicacion.IdOrganizacion);
+            }
+        }
+
+        if (organizacionSeleccionada == null && idOrganizacion.HasValue)
+        {
+            organizacionSeleccionada = BD.ObtenerOrganizacionPorId(idOrganizacion.Value);
+        }
+
+        organizacionSeleccionada ??= BD.ObtenerOrganizaciones().FirstOrDefault();
+
+        if (organizacionSeleccionada == null)
+        {
+            TempData["DonacionError"] = "No hay organizaciones disponibles para recibir la donación.";
+            return RedirectToAction("Index", "Catalogo");
+        }
+
         ViewBag.UsuarioNombre = usuario.Nombre;
         ViewBag.UsuarioApellido = usuario.Apellido;
         ViewBag.UsuarioEmail = usuario.Email;
-        ViewBag.Organizaciones = BD.ObtenerOrganizaciones();
+        ViewBag.OrganizacionSeleccionada = organizacionSeleccionada;
+        ViewBag.OrganizacionId = organizacionSeleccionada.Id;
+        ViewBag.Publicacion = publicacion;
+        ViewBag.IdPublicacion = idPublicacion ?? publicacion?.Id ?? 0;
 
         return View();
     }
@@ -31,7 +59,7 @@ public class DonarController : Controller
     [HttpPost]
     [ValidateAntiForgeryToken]
     [RequireRole("Usuario")]
-    public IActionResult Submit(int idOrganizacion, string tipoAporte, string cantidad, string mensaje, bool donarAnonimamente)
+    public IActionResult Submit(int idOrganizacion, int idPublicacion, string tipoAporte, string cantidad, string mensaje, bool donarAnonimamente)
     {
         var usuarioId = HttpContext.Session.GetInt32("UsuarioId");
         if (!usuarioId.HasValue)
@@ -39,9 +67,22 @@ public class DonarController : Controller
             return RedirectToAction("Login", "Cuenta");
         }
 
+        if (idPublicacion > 0)
+        {
+            var publicacion = BD.ObtenerPublicacionPorId(idPublicacion);
+            if (publicacion == null)
+            {
+                TempData["DonacionError"] = "La publicación ya no está disponible.";
+                return RedirectToAction("Index", "Catalogo");
+            }
+
+            idOrganizacion = publicacion.IdOrganizacion;
+        }
+
         if (idOrganizacion <= 0)
         {
-            idOrganizacion = BD.ObtenerOrganizaciones().FirstOrDefault()?.Id ?? 1;
+            TempData["DonacionError"] = "No se pudo identificar la organización destinataria.";
+            return RedirectToAction("Index", "Catalogo");
         }
 
         if (string.IsNullOrWhiteSpace(tipoAporte))
@@ -51,9 +92,8 @@ public class DonarController : Controller
 
         if (string.IsNullOrWhiteSpace(cantidad))
         {
-            ModelState.AddModelError(string.Empty, "Ingresá la cantidad o detalle del aporte.");
-            ViewBag.Organizaciones = BD.ObtenerOrganizaciones();
-            return View("Index");
+            TempData["DonacionError"] = "Ingresá la cantidad o el detalle del aporte.";
+            return RedirectToAction("Index", "Donar", new { idOrganizacion, idPublicacion });
         }
 
         var usuario = BD.ObtenerUsuarioPorId(usuarioId.Value);

@@ -12,5 +12,7 @@ namespace ProgramacionXEfsi_Puente.Models
         public string PersonasBeneficiadas { get; set; } = "0";
         public string Rol { get; set; } = "Usuario";
         public bool EsAprobado { get; set; } = true;
+        public string Telefono { get; set; } = string.Empty;
+        public string RedSocial { get; set; } = string.Empty;
     }
 }

@@ -1,5 +1,8 @@
 @{
     ViewData["Title"] = "Mapa";
+    var rol = Context.Session.GetString("Rol") ?? string.Empty;
+    var esUsuario = string.Equals(rol, "Usuario", StringComparison.OrdinalIgnoreCase);
+    var esOng = string.Equals(rol, "Ong", StringComparison.OrdinalIgnoreCase);
 }
 
 <div class="space-y-8 py-10">
@@ -38,9 +41,18 @@
                 </div>
             </div>
 
-            <a href="/Donar" class="mt-8 inline-flex w-full items-center justify-center rounded-xl bg-[#2F2A28] px-4 py-3 text-base font-bold text-white transition hover:bg-[#1d1b1a]">
-                Volver a la donación
-            </a>
+            @if (esUsuario)
+            {
+                <a href="/Donar" class="mt-8 inline-flex w-full items-center justify-center rounded-xl bg-[#2F2A28] px-4 py-3 text-base font-bold text-white transition hover:bg-[#1d1b1a]">
+                    Volver a la donación
+                </a>
+            }
+            else if (esOng)
+            {
+                <div class="mt-8 rounded-xl bg-[#E9F1F0] px-4 py-3 text-center text-sm font-bold text-[#496C69]">
+                    Las ONG no pueden realizar donaciones.
+                </div>
+            }
         </aside>
     </div>
 </div>

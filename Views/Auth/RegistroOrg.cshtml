@@ -29,6 +29,21 @@
                 </div>
 
                 <div>
+                    <label for="ubicacionCalle" class="mb-2 block text-xs font-bold tracking-[0.18em] text-[#4A403B]">CALLE</label>
+                    <input id="ubicacionCalle" name="ubicacionCalle" type="text" class="w-full rounded-xl border border-[#D9D1CA] bg-[#F9F7F5] px-4 py-3 text-sm text-[#2F2A28] outline-none transition focus:border-[#2F9D9D] focus:ring-2 focus:ring-[#CFEAEA]" placeholder="Ej: Av. Corrientes" />
+                </div>
+
+                <div>
+                    <label for="ubicacionNumero" class="mb-2 block text-xs font-bold tracking-[0.18em] text-[#4A403B]">NÚMERO</label>
+                    <input id="ubicacionNumero" name="ubicacionNumero" type="text" class="w-full rounded-xl border border-[#D9D1CA] bg-[#F9F7F5] px-4 py-3 text-sm text-[#2F2A28] outline-none transition focus:border-[#2F9D9D] focus:ring-2 focus:ring-[#CFEAEA]" placeholder="Ej: 1234" />
+                </div>
+
+                <div class="md:col-span-2">
+                    <label for="ubicacionLocalidad" class="mb-2 block text-xs font-bold tracking-[0.18em] text-[#4A403B]">LOCALIDAD / BARRIO</label>
+                    <input id="ubicacionLocalidad" name="ubicacionLocalidad" type="text" class="w-full rounded-xl border border-[#D9D1CA] bg-[#F9F7F5] px-4 py-3 text-sm text-[#2F2A28] outline-none transition focus:border-[#2F9D9D] focus:ring-2 focus:ring-[#CFEAEA]" placeholder="Ej: CABA, Palermo" />
+                </div>
+
+                <div>
                     <label for="password" class="mb-2 block text-xs font-bold tracking-[0.18em] text-[#4A403B]">CONTRASEÑA</label>
                     <input id="password" name="password" type="password" class="w-full rounded-xl border border-[#D9D1CA] bg-[#F9F7F5] px-4 py-3 text-sm text-[#2F2A28] outline-none transition focus:border-[#2F9D9D] focus:ring-2 focus:ring-[#CFEAEA]" />
                 </div>
@@ -36,6 +51,19 @@
                 <div>
                     <label for="confirmPassword" class="mb-2 block text-xs font-bold tracking-[0.18em] text-[#4A403B]">CONFIRMAR CONTRASEÑA</label>
                     <input id="confirmPassword" name="confirmPassword" type="password" class="w-full rounded-xl border border-[#D9D1CA] bg-[#F9F7F5] px-4 py-3 text-sm text-[#2F2A28] outline-none transition focus:border-[#2F9D9D] focus:ring-2 focus:ring-[#CFEAEA]" />
+                </div>
+            </div>
+
+            <div>
+                <label class="mb-2 block text-xs font-bold tracking-[0.18em] text-[#4A403B]">NECESIDADES QUE PODÉS RECIBIR</label>
+                <div class="grid gap-3 md:grid-cols-2 rounded-xl border border-[#D9D1CA] bg-[#F9F7F5] p-4">
+                    @foreach (var necesidad in new[] { "Alimentos", "Ropa", "Calzado", "Útiles escolares", "Medicamentos", "Frazadas y abrigo", "Muebles", "Artículos de higiene", "Juguetes", "Pañales y artículos de bebé", "Dinero" })
+                    {
+                        <label class="flex items-center gap-2 text-sm text-[#2F2A28]">
+                            <input type="checkbox" name="necesidades" value="@necesidad" class="h-4 w-4 rounded border-[#D9D1CA] text-[#2F9D9D] focus:ring-[#CFEAEA]" />
+                            <span>@necesidad</span>
+                        </label>
+                    }
                 </div>
             </div>
 
