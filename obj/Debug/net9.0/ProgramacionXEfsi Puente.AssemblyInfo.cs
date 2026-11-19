@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ProgramacionXEfsi Puente")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+85c1f43bf14f827ea7eea4031362fc122959de21")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d29e36a46ab1bdf40ec7f5e4dff38f187245e95d")]
 [assembly: System.Reflection.AssemblyProductAttribute("ProgramacionXEfsi Puente")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ProgramacionXEfsi Puente")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -14,5 +14,6 @@ namespace ProgramacionXEfsi_Puente.Models
         public bool EsAprobado { get; set; } = true;
         public string Telefono { get; set; } = string.Empty;
         public string RedSocial { get; set; } = string.Empty;
+        public string FotoPerfil { get; set; } = string.Empty;
     }
 }

@@ -62,6 +62,7 @@ namespace ProgramacionXEfsi_Puente.Models
                 Email = Obtener("Mail", Obtener("Email", string.Empty))?.ToString() ?? string.Empty,
                 Telefono = Obtener("Telefono", string.Empty)?.ToString() ?? string.Empty,
                 RedSocial = Obtener("RedSocial", string.Empty)?.ToString() ?? string.Empty,
+                FotoPerfil = Obtener("FotoPerfil", string.Empty)?.ToString() ?? string.Empty,
                 Clave = Obtener("Contraseña", Obtener("Clave", string.Empty))?.ToString() ?? string.Empty,
                 DonacionRealizada = Obtener("DonacionRealizada", 0) is int donacion
                     ? donacion
@@ -86,12 +87,27 @@ namespace ProgramacionXEfsi_Puente.Models
         {
             using var connection = CrearConexion();
 
-            var row = connection.QueryFirstOrDefault<dynamic>(
-                "ObtenerUsuario",
-                new { Id = id },
-                commandType: CommandType.StoredProcedure);
+            try
+            {
+                var row = connection.QueryFirstOrDefault<dynamic>(
+                    "ObtenerUsuario",
+                    new { Id = id },
+                    commandType: CommandType.StoredProcedure);
 
-            return row == null ? null : MapearUsuario(row);
+                return row == null ? null : MapearUsuario(row);
+            }
+            catch (SqlException ex) when (ex.Number == 2812 || ex.Number == 208)
+            {
+                return new Usuario
+                {
+                    Id = id,
+                    Nombre = "Usuario",
+                    Apellido = string.Empty,
+                    NombreUsuario = "Usuario",
+                    Email = string.Empty,
+                    Rol = "Usuario"
+                };
+            }
         }
 
         public static Organizacion? ObtenerOrganizacionPorId(int id)
@@ -450,7 +466,7 @@ namespace ProgramacionXEfsi_Puente.Models
                     var imagenUrl = dict.TryGetValue("ImagenUrl", out var imagenObj) && imagenObj != null ? imagenObj.ToString() : null;
                     var cosasQueNecesitan = dict.TryGetValue("CosasQueNecesitan", out var cosasObj) && cosasObj != null ? cosasObj.ToString() : string.Empty;
 
-                    return new Publicacion
+                    return CompletarProgresoPublicacion(new Publicacion
                     {
                         Id = row.Id,
                         IdOrganizacion = row.IdOrganizacion,
@@ -459,12 +475,15 @@ namespace ProgramacionXEfsi_Puente.Models
                         Descripcion = row.Descripcion ?? string.Empty,
                         Ubicacion = row.Ubicacion ?? string.Empty,
                         Necesidades = row.Necesidades ?? string.Empty,
+                        NombreOrganizacion = row.NombreOrganizacion ?? string.Empty,
                         CosasQueNecesitan = cosasQueNecesitan ?? string.Empty,
                         ImagenUrl = imagenUrl,
                         FechaAlta = row.FechaAlta is DateTime fecha ? fecha : DateTime.Now,
                         FechaLimite = fechaLimiteValue
-                    };
-                }).ToList();
+                    });
+                }).Select(CompletarProgresoPublicacion)
+                  .Where(publicacion => !PublicacionEstaSaldada(publicacion))
+                  .ToList();
             }
             catch
             {
@@ -474,7 +493,7 @@ namespace ProgramacionXEfsi_Puente.Models
                     new { IdOrganizacion = idOrganizacion },
                     commandType: CommandType.StoredProcedure).ToList();
 
-                return rows.Select(row => new Publicacion
+                return rows.Select(row => CompletarProgresoPublicacion(new Publicacion
                 {
                     Id = row.Id,
                     IdOrganizacion = row.IdOrganizacion,
@@ -483,9 +502,10 @@ namespace ProgramacionXEfsi_Puente.Models
                     Descripcion = row.Descripcion ?? string.Empty,
                     Ubicacion = row.Ubicacion ?? string.Empty,
                     Necesidades = row.Necesidades ?? string.Empty,
+                    NombreOrganizacion = row.NombreOrganizacion ?? string.Empty,
                     FechaAlta = row.FechaAlta is DateTime fecha ? fecha : DateTime.Now,
                     FechaLimite = null
-                }).ToList();
+                })).Where(publicacion => !PublicacionEstaSaldada(publicacion)).ToList();
             }
         }
 
@@ -726,58 +746,6 @@ namespace ProgramacionXEfsi_Puente.Models
                 publicacion.NecesidadesDetalle = new List<NecesidadPublicacion>();
             }
 
-            if (publicacion.NecesidadesDetalle.Count == 0 && !string.IsNullOrWhiteSpace(publicacion.Necesidades))
-            {
-                var categorias = publicacion.Necesidades
-                    .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
-                    .Distinct(StringComparer.OrdinalIgnoreCase)
-                    .ToList();
-
-                var cantidadesFallback = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
-
-                using var fallbackConnection = CrearConexion();
-                foreach (var categoria in categorias)
-                {
-                    var necesidadId = fallbackConnection.QuerySingleOrDefault<int?>(
-                        "ObtenerNecesidadPorCategoria",
-                        new { Categoria = categoria },
-                        commandType: CommandType.StoredProcedure);
-
-                    if (!necesidadId.HasValue)
-                    {
-                        necesidadId = fallbackConnection.QuerySingleOrDefault<int?>(
-                            "RegistrarNecesidad",
-                            new { Categoria = categoria },
-                            commandType: CommandType.StoredProcedure);
-                    }
-
-                    if (necesidadId.HasValue)
-                    {
-                        cantidadesFallback[categoria] = 1;
-                        publicacion.NecesidadesDetalle.Add(new NecesidadPublicacion
-                        {
-                            IdNecesidad = necesidadId.Value,
-                            Categoria = categoria,
-                            CantidadSolicitada = 1,
-                            CantidadRecibida = 0
-                        });
-                    }
-                }
-
-                if (cantidadesFallback.Count > 0)
-                {
-                    try
-                    {
-                        RegistrarNecesidadesPublicacion(publicacion.Id, cantidadesFallback);
-                    }
-                    catch
-                    {
-                        // La vista conserva el respaldo para que las opciones sigan disponibles,
-                        // aunque la persistencia de cantidades no esté configurada en la base.
-                    }
-                }
-            }
-
             return publicacion;
         }
 
@@ -916,6 +884,104 @@ namespace ProgramacionXEfsi_Puente.Models
                 "RegistrarNecesidadesPublicacion",
                 new { IdPublicacion = idPublicacion, NecesidadesJson = necesidadesJson },
                 commandType: CommandType.StoredProcedure);
+        }
+
+        private static void AsegurarComentariosLanding()
+        {
+        }
+
+        public static List<ComentarioLanding> ObtenerComentariosLanding()
+        {
+            try
+            {
+                using var connection = CrearConexion();
+
+                var rows = connection.Query<dynamic>(
+                    "ObtenerComentariosLanding",
+                    commandType: CommandType.StoredProcedure).ToList();
+
+                return rows.Select(row => new ComentarioLanding
+                {
+                    Id = Convert.ToInt32(row.Id),
+                    Nombre = row.Nombre?.ToString() ?? "Usuario",
+                    Rol = row.Rol?.ToString() ?? "Usuario",
+                    Texto = row.Texto?.ToString() ?? string.Empty,
+                    FechaAlta = Convert.ToDateTime(row.FechaAlta)
+                }).ToList();
+            }
+            catch (SqlException ex) when (
+                ex.Number == 208
+                || ex.Number == 2812
+                || ex.Message.Contains("ComentariosLanding", StringComparison.OrdinalIgnoreCase)
+                || ex.Message.Contains("ObtenerComentariosLanding", StringComparison.OrdinalIgnoreCase))
+            {
+                // La landing sigue funcionando aunque esta base no tenga incorporado el módulo de comentarios.
+                return new List<ComentarioLanding>();
+            }
+        }
+
+        public static void AgregarComentarioLanding(string nombre, string rol, string texto)
+        {
+            var nombreSeguro = nombre?.Trim();
+            var textoSeguro = texto?.Trim();
+
+            if (string.IsNullOrWhiteSpace(nombreSeguro)
+                || string.IsNullOrWhiteSpace(textoSeguro)
+                || textoSeguro.Length > 500)
+            {
+                throw new ArgumentException("El comentario no es válido.");
+            }
+
+            using var connection = CrearConexion();
+            connection.Execute(
+                "AgregarComentarioLanding",
+                new { Nombre = nombreSeguro, Rol = rol, Texto = textoSeguro },
+                commandType: CommandType.StoredProcedure);
+        }
+
+        public static bool ActualizarPerfilUsuario(int id, string nombreUsuario, string email, string telefono, string? nuevaClave, string fotoPerfil)
+        {
+            using var connection = CrearConexion();
+
+            var resultado = connection.ExecuteScalar<int>(
+                "ActualizarPerfilUsuario",
+                new
+                {
+                    Id = id,
+                    NombreUsuario = nombreUsuario,
+                    Mail = email,
+                    Telefono = telefono,
+                    NuevaClave = nuevaClave,
+                    FotoPerfil = fotoPerfil
+                },
+                commandType: CommandType.StoredProcedure);
+
+            return resultado > 0;
+        }
+
+        private static Publicacion CompletarProgresoPublicacion(Publicacion publicacion)
+        {
+            try
+            {
+                publicacion.NecesidadesDetalle = ObtenerNecesidadesPublicacion(publicacion.Id);
+            }
+            catch
+            {
+                publicacion.NecesidadesDetalle = new List<NecesidadPublicacion>();
+            }
+
+            return publicacion;
+        }
+
+        private static bool PublicacionEstaSaldada(Publicacion publicacion)
+        {
+            if (publicacion.NecesidadesDetalle.Count == 0)
+            {
+                return false;
+            }
+
+            return publicacion.PorcentajeGeneral >= 100
+                && publicacion.NecesidadesDetalle.All(necesidad => necesidad.Restante <= 0);
         }
     }
 }

@@ -1,0 +1,75 @@
+@model ProgramacionXEfsi_Puente.Models.EditarPerfilInput
+@{
+    ViewData["Title"] = "Editar perfil";
+}
+
+<div class="mx-auto max-w-3xl rounded-[32px] bg-white p-6 shadow-sm ring-1 ring-[#f0e9e2] md:p-8">
+    <div class="mb-7">
+        <p class="text-sm font-bold uppercase tracking-[0.2em] text-[#8d7d72]">Configuración</p>
+        <h1 class="mt-2 text-3xl font-black text-[#1f1f1f]">Editar perfil</h1>
+    </div>
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="mb-6 rounded-2xl bg-red-50 p-4 text-sm text-red-700">
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <p>@error.ErrorMessage</p>
+            }
+        </div>
+    }
+
+    <form asp-action="Editar" asp-controller="Usuario" method="post" enctype="multipart/form-data" class="space-y-5">
+        @Html.AntiForgeryToken()
+
+        <div class="flex items-center gap-5">
+            <div class="h-24 w-24 overflow-hidden rounded-full bg-[#1d1d1c] text-center">
+                @if (!string.IsNullOrWhiteSpace(Model.FotoPerfil))
+                {
+                    <img src="@Model.FotoPerfil" alt="Foto de perfil" class="h-full w-full object-cover" />
+                }
+                else
+                {
+                    <span class="flex h-full items-center justify-center text-3xl font-bold text-white">@(string.IsNullOrWhiteSpace(Model.NombreUsuario) ? "U" : Model.NombreUsuario.Trim()[0].ToString().ToUpperInvariant())</span>
+                }
+            </div>
+            <div>
+                <label class="block text-sm font-bold text-[#3f322b]" for="foto">Foto de perfil</label>
+                <input id="foto" name="foto" type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" class="mt-2 block text-sm" />
+            </div>
+        </div>
+
+        <div>
+            <label asp-for="NombreUsuario" class="block text-sm font-bold text-[#3f322b]">Nombre de usuario</label>
+            <input asp-for="NombreUsuario" maxlength="50" class="mt-2 w-full rounded-2xl border border-[#dfd4ca] px-4 py-3 outline-none focus:border-[#ff7341]" />
+        </div>
+
+        <div>
+            <label asp-for="Email" class="block text-sm font-bold text-[#3f322b]">Correo electrónico</label>
+            <input asp-for="Email" type="email" maxlength="50" class="mt-2 w-full rounded-2xl border border-[#dfd4ca] px-4 py-3 outline-none focus:border-[#ff7341]" />
+        </div>
+
+        <div>
+            <label asp-for="Telefono" class="block text-sm font-bold text-[#3f322b]">Número de teléfono</label>
+            <input asp-for="Telefono" maxlength="50" class="mt-2 w-full rounded-2xl border border-[#dfd4ca] px-4 py-3 outline-none focus:border-[#ff7341]" />
+        </div>
+
+        <div class="grid gap-5 md:grid-cols-2">
+            <div>
+                <label asp-for="NuevaClave" class="block text-sm font-bold text-[#3f322b]">Nueva contraseña</label>
+                <input asp-for="NuevaClave" type="password" autocomplete="new-password" maxlength="50" class="mt-2 w-full rounded-2xl border border-[#dfd4ca] px-4 py-3 outline-none focus:border-[#ff7341]" />
+            </div>
+            <div>
+                <label asp-for="ConfirmarClave" class="block text-sm font-bold text-[#3f322b]">Repetir contraseña</label>
+                <input asp-for="ConfirmarClave" type="password" autocomplete="new-password" maxlength="50" class="mt-2 w-full rounded-2xl border border-[#dfd4ca] px-4 py-3 outline-none focus:border-[#ff7341]" />
+            </div>
+        </div>
+
+        <p class="text-sm text-[#6f6b68]">Dejá ambas contraseñas vacías si no querés cambiarla.</p>
+
+        <div class="flex flex-wrap gap-3 pt-2">
+            <button type="submit" class="rounded-full bg-[#1f1f1f] px-6 py-3 text-sm font-bold text-white hover:bg-[#30302f]">Guardar cambios</button>
+            <a asp-action="Perfil" asp-controller="Usuario" class="rounded-full border border-[#ddd1c5] px-6 py-3 text-sm font-bold text-[#3f322b] hover:bg-[#faf7f4]">Cancelar</a>
+        </div>
+    </form>
+</div>

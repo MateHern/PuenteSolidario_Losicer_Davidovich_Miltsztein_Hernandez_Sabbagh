@@ -132,3 +132,114 @@ else
         </div>
     </section>
 }
+
+<section class="impact-comments-section">
+    <div class="impact-comments-heading">
+        <div>
+            <p class="impact-comments-kicker">Pequeñas acciones, grandes cambios</p>
+            <h2 class="impact-comments-title">Historias de ayuda real</h2>
+        </div>
+    </div>
+
+    <div class="impact-story-grid">
+        <article class="impact-story-card impact-story-peach">
+            <div class="impact-story-image">
+                <span class="impact-story-tag">Donaciones</span>
+                <span class="impact-story-emoji">🎁</span>
+            </div>
+            <h3>Una ayuda que llegó a tiempo</h3>
+            <p>Una comunidad pudo compartir alimentos, ropa y productos esenciales con familias que lo necesitaban.</p>
+        </article>
+
+        <article class="impact-story-card impact-story-mint">
+            <div class="impact-story-image">
+                <span class="impact-story-tag">Voluntariado</span>
+                <span class="impact-story-emoji">🤝</span>
+            </div>
+            <h3>Voluntarios que hacen equipo</h3>
+            <p>Personas y organizaciones sumaron su tiempo y trabajo para acompañar proyectos de barrio.</p>
+        </article>
+
+        <article class="impact-story-card impact-story-sky">
+            <div class="impact-story-image">
+                <span class="impact-story-tag">Organizaciones</span>
+                <span class="impact-story-emoji">♡</span>
+            </div>
+            <h3>Causas cercanas y visibles</h3>
+            <p>Las ONG pudieron compartir sus necesidades y recibir apoyo concreto de quienes quieren colaborar.</p>
+        </article>
+    </div>
+
+    @if (TempData["ComentarioExito"] != null)
+    {
+        <div class="comment-success">@TempData["ComentarioExito"]</div>
+    }
+    @if (TempData["ComentarioError"] != null)
+    {
+        <div class="comment-error">@TempData["ComentarioError"]</div>
+    }
+
+    @if (isLoggedIn && (string.Equals(rol, "Usuario", StringComparison.OrdinalIgnoreCase) || isOng))
+    {
+        <form asp-action="AgregarComentario" asp-controller="Home" method="post" class="comment-form">
+            @Html.AntiForgeryToken()
+            <div class="comment-form-heading">
+                <div class="comment-author-avatar">@(isOng ? "ONG" : "YO")</div>
+                <div>
+                    <strong>@nombre</strong>
+                    <span>@(isOng ? "Organización" : "Usuario")</span>
+                </div>
+            </div>
+            <label for="textoComentario" class="comment-label">Contanos tu experiencia</label>
+            <textarea id="textoComentario" name="texto" maxlength="500" rows="4" class="comment-textarea" placeholder="Escribí tu comentario..."></textarea>
+            <div class="comment-form-footer">
+                <small>Máximo 500 caracteres</small>
+                <button type="submit" class="comment-submit">Publicar comentario</button>
+            </div>
+        </form>
+    }
+    else if (!isLoggedIn)
+    {
+        <div class="comment-login-callout">
+            <div>
+                <strong>¿Viviste una experiencia solidaria?</strong>
+                <span>Iniciá sesión para compartir tu comentario.</span>
+            </div>
+            <a href="/Cuenta/Login">Iniciar sesión</a>
+        </div>
+    }
+
+    <div class="community-comments">
+        @{
+            var comentarios = ViewBag.ComentariosLanding as List<ProgramacionXEfsi_Puente.Models.ComentarioLanding>
+                ?? new List<ProgramacionXEfsi_Puente.Models.ComentarioLanding>();
+        }
+
+        @if (comentarios.Count == 0)
+        {
+            <article class="community-comment community-comment-placeholder">
+                <div class="community-avatar">✦</div>
+                <div>
+                    <div class="community-comment-name">Hospital Garrahan</div>
+                    <div class="community-stars">★★★★★</div>
+                    <p>Gracias a esta plataforma podemos dar a conocer nuestro trabajo y llegar a personas que quieren colaborar con nuestra misión.</p>
+                </div>
+            </article>
+        }
+        else
+        {
+            foreach (var comentario in comentarios)
+            {
+                var inicial = comentario.Nombre.Length > 0 ? comentario.Nombre.Substring(0, 1).ToUpperInvariant() : "U";
+                <article class="community-comment">
+                    <div class="community-avatar">@inicial</div>
+                    <div>
+                        <div class="community-comment-name">@comentario.Nombre</div>
+                        <div class="community-role">@(string.Equals(comentario.Rol, "Ong", StringComparison.OrdinalIgnoreCase) ? "Organización" : "Usuario")</div>
+                        <p>@comentario.Texto</p>
+                    </div>
+                </article>
+            }
+        }
+    </div>
+</section>

@@ -1,6 +1,7 @@
 @model ProgramacionXEfsi_Puente.Models.LoginInput
 @{
     ViewData["Title"] = "Iniciar sesión";
+    ViewData["FullWidth"] = true;
 }
 
 <div class="login-page">
@@ -57,8 +58,16 @@
 
                 <button type="submit" class="login-btn">Iniciar sesión</button>
 
-                <a href="/Auth/RegistroPersonal" class="login-alt-btn d-block text-center leading-[3rem]">Crear cuenta personal →</a>
-                <a href="/Auth/RegistroOrg" class="login-alt-btn d-block text-center leading-[3rem]">Registrar organización →</a>
+                <div class="login-create-actions">
+                    <a href="/Auth/RegistroPersonal" class="login-create-btn login-create-personal">
+                        <span>Crear cuenta personal</span>
+                        <b>→</b>
+                    </a>
+                    <a href="/Auth/RegistroOrg" class="login-create-btn login-create-org">
+                        <span>Registrar organización</span>
+                        <b>→</b>
+                    </a>
+                </div>
             </form>
         </div>
     </div>

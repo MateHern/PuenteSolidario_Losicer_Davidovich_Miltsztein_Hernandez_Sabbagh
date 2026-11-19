@@ -57,12 +57,51 @@ public class HomeController : Controller
             }
         }
 
+        ViewBag.ComentariosLanding = BD.ObtenerComentariosLanding();
+
         return View();
     }
 
     public IActionResult Privacy()
     {
         return View();
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult AgregarComentario(string texto)
+    {
+        var rol = HttpContext.Session.GetString("Rol") ?? string.Empty;
+        var puedeComentar = string.Equals(rol, "Usuario", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(rol, "Ong", StringComparison.OrdinalIgnoreCase);
+
+        if (!puedeComentar)
+        {
+            return RedirectToAction("Login", "Cuenta");
+        }
+
+        if (string.IsNullOrWhiteSpace(texto))
+        {
+            TempData["ComentarioError"] = "Escribí un comentario antes de publicar.";
+            return RedirectToAction(nameof(Index));
+        }
+
+        var nombre = string.Equals(rol, "Ong", StringComparison.OrdinalIgnoreCase)
+            ? HttpContext.Session.GetString("OngNombre") ?? "ONG"
+            : HttpContext.Session.GetString("UsuarioNombre") ?? "Usuario";
+
+        try
+        {
+            BD.AgregarComentarioLanding(nombre, rol, texto.Trim());
+            TempData["ComentarioExito"] = "Tu comentario fue publicado.";
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "No se pudo publicar un comentario en la landing page.");
+            TempData["ComentarioError"] = "No se pudo publicar el comentario. Intentá nuevamente.";
+        }
+
+        return RedirectToAction(nameof(Index));
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
